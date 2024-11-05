@@ -1,0 +1,26 @@
+Documentação (contexto, objetivo, justificativa)
+Trello
+github
+Banco de dados
+Aplicações de cálculos matemáticos**
+Utilização da VM
+Contexto, inovação, planejamento, dashboard, KPIs
+Objetivo de desenvolvimento ONU - Saúde e bem estar (quantos jogadores, jogar faz bem pra saúde?, 
+jogar relaxa **the sims na educação?**)
+
+Momento que senti interesse, como está no meu dia a dia, por que escolhi esse tema
+	Comecei a jogar com 12 anos, foi a primeira coisa 'minha', consigo passar horas jogando sem enjoar, algo que realmente tenho certeza que eu sei
+Valores representados
+	Liberdade, inclusão, criatividade, conforto, explorar
+Maior dificuldade em relação ao tema
+	Dificuldade com o acesso a tecnologia que suportasse o jogo
+Maior superação
+	Ganhei um notebook, surgiu o interesse pela tecnologia
+Gratidão à alguem
+	
+
+	-- SimsChallenge --
+	Um site para descobrir desafios de the sims, é possivel aleatorizar traços, aspirações e objetivos para os sims e desafios
+	Login para conseguir cadastrar as informações dos seus saves e acompanhar o progresso com os desafios.
+
+
