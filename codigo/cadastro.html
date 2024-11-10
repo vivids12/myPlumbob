@@ -7,6 +7,8 @@
 
         <link rel="shortcut icon" type="imagex/png" href="img/icone.ico">
         <link rel="stylesheet" sizes="16x16 32x32 64x64" href="css/cadastro.css">
+        
+        <script src="./js/sessao.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +28,7 @@
                     <p>Confirmar senha</p>
                     <input type="password" id="inpConfirm" placeholder="********">
                 </div>
+                <span id="spanErro"></span>
                 <button class="btCadastro">Cadastrar-se</button>
                 <a href="">Voltar ao inicio</a>
             </div>
@@ -38,3 +41,117 @@
         </div>
     </body>
 </html>
+<script> 
+    function cadastrar() {
+      // aguardar();
+  
+      //Recupere o valor da nova input pelo nome do id
+      // Agora vá para o método fetch logo abaixo
+      var nomeVar = inpNome.value;
+      var emailVar = inpEmail.value;
+      var senhaVar = inpSenha.value;
+      var confirmacaoSenhaVar = inpConfirm.value;
+  
+      // Verificando se há algum campo em branco
+      if (
+        nomeVar == "" ||
+        emailVar == "" ||
+        senhaVar == "" ||
+        confirmacaoSenhaVar == ""
+      ) {
+        // spanErro.style.display = "block";
+        spanErro.innerHTML =
+          "Você deve preencher todos os campos.";
+  
+        finalizarAguardar();
+        return false;
+  
+      } else if (nomeVar.length <= 1) {
+        // spanErro.style.display = "block";
+        spanErro.innerHTML =
+          "Nome deve conter mais de 1 caractere.";
+  
+        finalizarAguardar();
+        return false;
+      } else if (emailVar.includes('@') == false) {
+        // spanErro.style.display = "block";
+        spanErro.innerHTML =
+          "E-mail deve conter @.";
+  
+        finalizarAguardar();
+        return false;
+      } else if (senhaVar.length < 6) {
+        // spanErro.style.display = "block";
+        spanErro.innerHTML =
+          "Senha deve ter pelo menos 6 digitos.";
+  
+        finalizarAguardar();
+        return false;
+      } else if (senhaVar == confirmacaoSenhaVar){
+        spanErro.innerHTML =
+          "As senhas devem ser idênticas.";
+  
+        finalizarAguardar();
+        return false;
+      } else {
+        setInterval(sumirMensagem, 5000);
+      }
+  
+      // Verificando se o código de ativação é de alguma empresa cadastrada
+    //   for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+    //     if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+    //       idEmpresaVincular = listaEmpresasCadastradas[i].id
+    //       console.log("Código de ativação válido.");
+    //       break;
+    //     } else {
+    //       cardErro.style.display = "block";
+    //       mensagem_erro.innerHTML = "Código inválido";
+    //       finalizarAguardar();
+    //     }
+    //   }
+  
+      // Enviando o valor da nova input
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // crie um atributo que recebe o valor recuperado aqui
+          // Agora vá para o arquivo routes/usuario.js
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          senhaServer: senhaVar
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+  
+          if (resposta.ok) {
+            cardErro.style.display = "block";
+  
+            spanErro.innerHTML =
+              "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+  
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "2000");
+  
+            limparFormulario();
+            finalizarAguardar();
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+          finalizarAguardar();
+        });
+  
+      return false;
+    }
+  
+    function sumirMensagem() {
+      cardErro.style.display = "none";
+    }
+  </script>
