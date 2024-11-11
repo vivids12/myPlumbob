@@ -156,7 +156,7 @@ h3 {
     margin: 1.5vw 20vh;
 }
 
-#desafio p{
+.pCorpo{
     font-size: 2.7vh;
     line-height: 3.5vh;
     margin: 0 20vh;
@@ -300,4 +300,8 @@ h4 {
 
 .btSecundario:hover, .btSecundario:focus {
     transform: scale(0.9);
+}
+
+#aproveite .icone{
+    width: 1.5vw;
 }
