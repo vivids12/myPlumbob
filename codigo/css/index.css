@@ -144,12 +144,13 @@ header {
     padding: 0 20vh;
 } */
 
-#desafio h2{
+h2{
     font-size: 5vh;
     margin: 2vw 20vh;
+    color: #052937;
 }
 
-#desafio h3 {
+h3 {
     color: #4276B7;
     font-size: 3.5vh;
     margin: 1.5vw 20vh;
@@ -172,7 +173,7 @@ header {
     align-items: center;
 }
 
-#card1{
+.card{
     background: linear-gradient(to right, rgba(193,42,37,1) 0%, rgba(91,20,18,1) 100%);
     width: 85%;
     height: 80%;
@@ -190,29 +191,29 @@ header {
     box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
 }
 
-#card1 img{
+.card img{
     height: 45vh;
 }
 
-#card1 p {
+.card p {
     font-size: 2.7vh;
     line-height: 3.5vh;
-    margin: 0;
+    margin: 0 !important;
     width: 38vw;
 }
 
-#card1 h4 {
+h4 {
     font-size: 3.5vh;
     margin: 2vh 0;
 }
 
-#card1 .esq{
+.card .esq{
     padding: 8vh 0;
     height: 100%;
     display: grid;
 }
 
-#card1 a {
+.card a {
     color: #BD2924;
     background-color: white;
     text-decoration: none;
@@ -230,7 +231,7 @@ header {
     transition: ease-in-out 0.5s;
 }
 
-#card1 a:hover, #card1 a:focus{
+.card a:hover, .card a:focus{
     transform: scale(1.1);
 }
 
@@ -238,4 +239,65 @@ header {
     color: white;
     font-size: 100px;
     cursor: pointer;
+}
+
+#cadastrese{
+    margin: 8vh 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+}
+
+#cadastrese span{
+    background: linear-gradient(to right, rgba(246,41,12,1) 0%, rgba(41,175,63,1) 0%, rgba(49,255,52,1) 100%);
+    width: 100%;
+    height: 12vh;
+    margin: 4vh 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+
+#cadastrese p{
+    font-size: 2.7vh;
+    line-height: 3.5vh;
+    margin: 0 20vh;
+}
+
+.btSecundario {
+    color: white;
+    text-decoration: none;
+    font-size: 3vh;
+    font-weight: 600;
+    transition: ease-in-out 0.5s;
+}
+
+.btPrincipal {
+    background-color: white;
+    width: 16vw;
+    height: 6vh;
+    border-radius: 0.6vh;
+    text-decoration: none;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    color: #29AF3F;
+    font-size: 3vh;
+    font-weight: 600;
+
+    transition: ease-in-out 0.5s;
+}
+
+.btPrincipal:hover, .btPrincipal:focus {
+    transform: scale(0.9);
+}
+
+.btSecundario:hover, .btSecundario:focus {
+    transform: scale(0.9);
 }
