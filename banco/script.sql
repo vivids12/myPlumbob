@@ -7,6 +7,7 @@ CREATE TABLE usuario(
     email VARCHAR(45),
     senha varchar(15)
 );
+
 SELECT * FROM usuario;
 
 CREATE TABLE desafio(
