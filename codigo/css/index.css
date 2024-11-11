@@ -302,6 +302,117 @@ h4 {
     transform: scale(0.9);
 }
 
+#aproveite{
+    display: flex;
+    flex-direction: column;
+}
+
 #aproveite .icone{
     width: 1.5vw;
 }
+
+#aproveite .linha{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: start; 
+    align-items: center;
+}
+
+#aproveite p{
+    width: fit-content; 
+    margin-right: 0.5vw;
+}
+
+.imgAproveite{
+    align-self: center;
+    margin: 5vh 0;
+}
+
+/* RODAPÉ */
+
+footer{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    color: white;
+    background-color: #4276B7;
+    padding: 1.5vw 6vh;
+}
+
+footer h2{
+    color: #ffffff;
+    margin: 0;
+    font-size: 4vh;
+}
+
+footer input{
+    color: #ffffff;
+    background-color: #4276B7;
+    border-radius: 0.8vh;
+    border: white solid 2px;
+    height: 5vh;
+    width: 60%;
+    padding-left: 1.2vh;
+}
+
+footer input::placeholder, footer textarea::placeholder{
+    color: white;
+}
+
+footer span{
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+}
+
+footer button{
+    color: #4276B7;
+    background-color: #ffffff;
+    border: 0;
+    width: 40%;
+    border-radius: 0.8vh;
+    font-weight: 600;
+    font-size: 3vh;
+}
+
+footer button:hover, footer button:focus{
+    cursor: pointer;
+    transform: scale(0.95);
+}
+
+textarea{
+    width: 100%;
+    height: 100px;
+    margin: 1vh 0;
+    color: #ffffff;
+    background-color: #4276B7;
+    font-size: 2vh;
+    padding: 10px;
+    border: white solid 2px;
+    border-radius: 0.8vh;
+    resize: none;
+    outline: none;
+}
+
+.redes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3vh;
+}
+
+.redes img{
+    width: 10vh;
+}
+
+.redes img:hover, .redes img:focus{
+    transform: scale(0.95);
+}
+
+footer .logo{
+    width: 50vh;
+    align-self: center;
+    justify-self: center;
+}
+
