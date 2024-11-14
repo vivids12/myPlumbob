@@ -9,13 +9,18 @@
   'opsz' 24
 }
 
+h1, h2, h3, h4, h5, h6{
+    font-weight: 700;
+    margin: 0;
+}
+
 * {
     box-sizing: border-box;
     font-family: "League Spartan", sans-serif;
 }
 
 html{
-    background-image: url(../img/svg/fundoHome.svg);
+    background-image: url(../img/svg/fundoHome.svg) !important;
     background-repeat: no-repeat; 
     background-position: top right;
     /* min-height: 100vh; */
@@ -23,6 +28,7 @@ html{
 }
 
 body {
+    background-color: #05293700 !important;
     display: flex;
     flex-direction: column;
     /* align-items: center;
@@ -128,6 +134,8 @@ header {
 
 #inicio h1{
     font-size: 14vh;
+    font-weight: 700;
+    line-height: 15vh;
     width: 49vw;
     margin: 0;
 }
@@ -162,26 +170,26 @@ h3 {
     margin: 0 20vh;
 }
 
-#divCarrosel {
-    width: 100%;
+.divCarrosel {
+    width: 100% !important;
     background: linear-gradient(to right, rgba(68,188,226,1) 0%, rgba(66,124,185,1) 100%);
-    height: 60vh;
+    height: 65vh !important;
     margin-top: 2vw;
 
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
 }
 
-.card{
+.cartao{
     background: linear-gradient(to right, rgba(193,42,37,1) 0%, rgba(91,20,18,1) 100%);
-    width: 85%;
-    height: 80%;
+    width: 80vw;
+    height: 100%;
     border-radius: 1vh;
 
     color: white;
 
-    display: grid;
+    display: grid !important;
     grid-template-columns: 60% 30%;
     justify-content: center;
     align-items: center;
@@ -191,11 +199,11 @@ h3 {
     box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
 }
 
-.card img{
+.cartao img{
     height: 45vh;
 }
 
-.card p {
+.cartao p {
     font-size: 2.7vh;
     line-height: 3.5vh;
     margin: 0 !important;
@@ -207,13 +215,13 @@ h4 {
     margin: 2vh 0;
 }
 
-.card .esq{
+.cartao .esq{
     padding: 8vh 0;
     height: 100%;
     display: grid;
 }
 
-.card a {
+.cartao a {
     color: #BD2924;
     background-color: white;
     text-decoration: none;
@@ -231,7 +239,7 @@ h4 {
     transition: ease-in-out 0.5s;
 }
 
-.card a:hover, .card a:focus{
+.cartao a:hover, .cartao a:focus{
     transform: scale(1.1);
 }
 
@@ -296,10 +304,14 @@ h4 {
 
 .btPrincipal:hover, .btPrincipal:focus {
     transform: scale(0.9);
+    color: #29AF3F;
+    text-decoration: none;
 }
 
 .btSecundario:hover, .btSecundario:focus {
     transform: scale(0.9);
+    color: white;
+    text-decoration: none;
 }
 
 #aproveite{
