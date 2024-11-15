@@ -1,0 +1,86 @@
+<html>
+    
+
+<head>
+    <title>home</title>
+    <script src="js/sessao.js"></script>
+</head>
+<body onload="validarSessao()">
+    <h1>Home</h1>
+
+    <h3>Olá <span id="b_usuario">usuario</span></h3>
+    
+    <p>Cadastrar save</p>
+    <input type="text" placeholder="Nome" id="inpNomeSave">
+    <button onclick="cadastroSave()">Enviar</button>
+    <div id="divMens"></div>
+    <button onclick="limparSessao()">Sair</button>
+</body>
+</html>
+<script>
+    // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    // var idUsuario = sessionStorage.ID_USUARIO;
+    divMens.innerHTML = sessionStorage.ID_USUARIO;
+
+    
+    function cadastroSave() {
+        var nomeVar = inpNomeSave.value;
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+    // // Verificando se o código de ativação é de alguma empresa cadastrada
+    // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+    //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+    //     idEmpresaVincular = listaEmpresasCadastradas[i].id
+    //     console.log("Código de ativação válido.");
+    //     break;
+    //   } else {
+    //     cardErro.style.display = "block";
+    //     mensagem_erro.innerHTML = "Código inválido";
+    //     finalizarAguardar();
+    //   }
+    // }
+
+        fetch("/saves/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nome: nomeVar,
+                idUsuario: idUsuario 
+                // emailServer: emailVar,
+                // senhaServer: senhaVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                console.log(nomeVar);
+                console.log(idUsuario);
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+
+                    divMens.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+</script>
