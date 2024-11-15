@@ -27,10 +27,8 @@
       <div id="formCad">
         <p>Nome</p>
         <input type="text" id="inpNome" placeholder="Nome" oninput="validarNome()">
-        <span id="erroNome"></span>
         <p>Email</p>
         <input type="text" id="inpEmail" placeholder="email@provedor.com" oninput="validarEmail()">
-        <span id="erroEmail"></span>
         <p>Senha</p>
         <input type="password" id="inpSenha" placeholder="********" oninput="validarSenha()">
         <p>Confirmar senha</p>
@@ -73,8 +71,6 @@
     var senhaVar = inpSenha.value;
     var confirmacaoSenhaVar = inpConfirm.value;
 
-
-
     // Verificando se há algum campo em branco
     if (
       nomeVar == "" ||
@@ -89,39 +85,14 @@
       finalizarAguardar();
       return false;
 
-    } else if (nomeVar.length <= 1) {
-      // spanErro.style.display = "block";
-      spanErro.innerHTML =
-        "Nome deve conter mais de 1 caractere.";
-
-      finalizarAguardar();
-      return false;
-    } else if (emailVar.includes('@') == false) {
-      // spanErro.style.display = "block";
-      spanErro.innerHTML =
-        "E-mail deve conter @.";
-
-      finalizarAguardar();
-      return false;
-    } else if (senhaVar.length < 8) {
-      // spanErro.style.display = "block";
-      spanErro.innerHTML =
-        "Senha deve ter pelo menos 8 digitos.";
-
-      finalizarAguardar();
-      return false;
-    } else if (senhaVar != senhaLower && senhaVar != senhaUpper) {
-      spanErro.innerHTML +=
-        "Senha deve ter pelo menos 1 caractere maiusculo e um minusculo.";
-    }
-    else if (senhaVar == confirmacaoSenhaVar) {
-      spanErro.innerHTML =
-        "As senhas devem ser idênticas.";
-
-      finalizarAguardar();
-      return false;
-    } else {
+    } else if (nomeValido && senhaValido && emailValido) {
       setInterval(sumirMensagem, 5000);
+    } else {
+      spanErro.innerHTML =
+        "Reveja suas respostas, algum campo está incorreto.";
+
+      finalizarAguardar();
+      return false;
     }
 
     // Verificando se o código de ativação é de alguma empresa cadastrada

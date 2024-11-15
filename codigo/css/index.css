@@ -182,8 +182,8 @@ h3 {
 }
 
 .cartao{
-    background: linear-gradient(to right, rgba(193,42,37,1) 0%, rgba(91,20,18,1) 100%);
-    width: 80vw;
+    background: #29AF3F;
+    width: 100%;
     height: 100%;
     border-radius: 1vh;
 
@@ -375,6 +375,7 @@ footer span{
     display: flex;
     flex-direction: row;
     gap: 2vh;
+    padding-bottom: 1vh;
 }
 
 footer button{

@@ -61,28 +61,12 @@
             Explore os desafios disponíveis e escolha o que você achar mais interessante. Você pode ver toda
             descrição do desafio e ver seus objetivos.
         </p>
-
-        <!-- <span class="material-symbols-outlined iconSetas" style="font-size: 100px;">
-                    chevron_left
-                </span> -->
-
-        <!-- <div class="esq">
-                        <h4>Desafio da viúva negra</h4>
-                        <p>
-                            O Desafio da Viúva Negra tem como base a espécie de aranha que mata e come o macho após o 
-                            acasalamento. O desafio consiste em criar uma personagem que se case várias vezes durante a 
-                            vida, matando cada um dos cônjuges pelo caminho e herdando o seu dinheiro.
-                        </p>
-                        <a href="">Ver mais</a>
-                    </div>
-                    <img src="img/svg/iconeVN.svg" alt="Deafio da viúva negra"> -->
-
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
             <div class="carousel-inner divCarrosel">
 
-                <div class="carousel-item active" style="width: fit-content; height: 100%; padding: 8vh 0;">
-                    <span id="card1" class="cartao">
+                <div class="carousel-item active" style="width: 100%; height: 100%; padding: 8vh 10vw;">
+                    <span id="card1" class="cartao" style="background: linear-gradient(to right, rgba(193,42,37,1) 0%, rgba(91,20,18,1) 100%)">
                         <div class="esq">
                             <h4>Desafio da viúva negra</h4>
                             <p>
@@ -98,9 +82,19 @@
                     </span>
                 </div>
 
-                <div class="carousel-item ">
-                    <img class="d-block w-100" src=".../800x400?auto=yes&bg=666&fg=444&text=Segundo Slide"
-                        alt="Segundo Slide">
+                <div class="carousel-item" style="width: 100%; height: 100%; padding: 8vh 10vw;">
+                    <span id="card2" class="cartao" style="background: linear-gradient(to right, #E53F6E 0%, #BB1C4A 100%)">
+                        <div class="esq">
+                            <h4>Desafio dos 7 bebês</h4>
+                            <p>
+                                Nesse desafio sua sim é recém-casada e descobre que está grávida de 7 bebês. 
+                                Infelizmente o cônjuge dela não aceita ficar com as criança e a deixa sozinha. 
+                                Sendo assim, eles se separam e ela precisa cria-los sozinha da melhor maneira.
+                            </p>
+                            <a href="" style="color: #E53F6E;">Ver mais</a>
+                        </div>
+                        <img src="img/svg/iconeBaby.svg" alt="Deafio dos 7 bebês">
+                    </span>
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -139,15 +133,20 @@
         <img src="img/svg/iconeHome.svg" alt="Aproveite" class="imgAproveite">
     </div>
 
-    <footer>
+    <footer id="footer">
         <div class="opiniao">
             <h2 class="rodape">Plerg majah bliff?</h2>
             <p>Caso tenha alguma sugestão de melhoria nos conte!</p>
-            <span>
-                <input type="text" id="inpNome" placeholder="Nome">
-                <button>Enviar</button>
-            </span>
-            <textarea id="txtOpn" placeholder="Deixe aqui sua sugestão ou pergunta."></textarea>
+            <form action="https://formsubmit.co/viviane.familia834149@gmail.com" method="POST">
+                <span>
+                    <input type="text" id="inpNome" name="nome" placeholder="Nome" required>
+                    <button type="submit">Enviar</button>
+                </span>
+                <input type="email" id="inpEmail" name="email" placeholder="Email" style="width: 100%;" required>
+                <input type="hidden" name="_next" value="http://127.0.0.1:5500/codigo#footer">
+                <input type="hidden" name="_captcha" value="false">
+                <textarea id="txtOpn" name="message" placeholder="Deixe aqui sua sugestão ou pergunta." required></textarea>
+            </form>
         </div>
         <div class="redes">
             <h2>Redes sociais</h2>

@@ -173,6 +173,16 @@ h2 {
     color: #28a03a;
 }
 
+#spanErro{
+    color: red;
+    font-size: 2vh;
+    padding-bottom: 1vh;
+}
+
+input:focus-visible{
+    outline: 0;
+}
+
 li {
     flex: 1 1 50%;
     box-sizing: border-box;

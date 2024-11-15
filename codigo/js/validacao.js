@@ -31,7 +31,7 @@ function validarEmail() {
                 inpEmail.style.border = 'solid #30B945 2px';
         } else {
                 spanErro.innerHTML =
-                        "Deve ser um email valido.";
+                        "Deve conter @ e terminar com .com ou .br.";
                 inpEmail.style.border = 'solid red 2px';
         }
 }
@@ -39,6 +39,8 @@ function validarEmail() {
 function validarSenha() {
         var senha = inpSenha.value;
         var confirma = inpConfirm.value;
+
+        senhaValido = 0;
 
         var senhaUpper = senha.toUpperCase();
         var senhaLower = senha.toLowerCase();
@@ -118,17 +120,27 @@ function validarSenha() {
                 inpEmail.style.border = 'solid #30B945 2px';
                 senhaValido = true;
         }
+        if (confirma != ''){
+                validarConfirm();   
+        }
 }
 
 function validarConfirm(){
         var senha = inpSenha.value;
         var confirma = inpConfirm.value;
-        
-        if (senha != confirma){
+
+        if (confirma == ''){
+                inpConfirm.style.border = 'solid #30B945 2px';
+        } else if (senha != confirma){
                 senhasIdenticas.style.display = 'block';
                 inpConfirm.style.border = 'solid red 2px';
+                senhaValido = false;
         } else {
                 senhasIdenticas.style.display = 'none';
                 inpConfirm.style.border = 'solid #30B945 2px';
+                senhaValido++;
+                if (senhaValido){
+                        senhaValido = true;
+                }
         }
 }
