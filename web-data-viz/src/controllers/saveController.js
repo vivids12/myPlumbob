@@ -20,7 +20,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu usuario está undefined!");
     }
 
-    saveModel.cadastrar(nome).then(function(resposta){
+    saveModel.cadastrar(nome, idUsuario).then(function(resposta){
         res.status(200).send("Save criado com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);

@@ -8,7 +8,7 @@ function listar() {
     return database.executar(instrucao);
 }
 
-function cadastrar(nome) {
+function cadastrar(nome, idUsuario) {
     var instrucao = `
         INSERT INTO save (nome, fkUsuario) VALUES ('${nome}', '${idUsuario}');
     `;
