@@ -5,11 +5,10 @@ function validarSessao() {
     var idUsuario = sessionStorage.ID_USUARIO;
 
     var b_usuario = document.getElementById("b_usuario");
-    var divID = document.getElementById("divMens");
+    // var divID = document.getElementById("divMens");
 
     if (email != null && nome != null) {
         b_usuario.innerHTML = nome;
-        divID.innerHTML = idUsuario;
     } else {
         window.location = "../login.html";
     }
@@ -17,9 +16,7 @@ function validarSessao() {
 
 function exibirUsuario() { 
     console.log("Nome do usuário: ", sessionStorage.NOME_USUARIO); 
-    console.log("ID do usuário: ", sessionStorage.ID_USUARIO); 
-    document.getElementById("b_usuario").innerText = sessionStorage.NOME_USUARIO; 
-    document.getElementById("divMens").innerText = sessionStorage.ID_USUARIO;
+    console.log("ID do usuário: ", sessionStorage.ID_USUARIO);
 }
 
 document.addEventListener("DOMContentLoaded", function () { 

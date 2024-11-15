@@ -45,7 +45,7 @@
         if (emailVar == "" || senhaVar == "") {
             // cardErro.style.display = "block"
             spanErro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
+            // finalizarAguardar();
             return false;
         }
         else {
@@ -72,15 +72,17 @@
             if (resposta.ok) {
                 console.log("Deu bom")
                 console.log(resposta);
-
+                
+                
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.SAVES = json.saves;
                     // sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
-
+                    
                     setTimeout(function () {
                         window.location = "./home.html";
                     }, 1000); // apenas para exibir o loading
@@ -93,7 +95,7 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
+                    // finalizarAguardar(texto);
                 });
             }
 

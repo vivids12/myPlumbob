@@ -16,4 +16,8 @@ router.get("/buscar/:id", function (req, res) {
     usuarioController.buscarUsuarioPeloId(req, res); 
 });
 
+// router.get("/buscarSavesPorUsuario", function (req, res) { 
+//     usuarioController.buscarSavesPorUsuario(req, res); 
+// });
+
 module.exports = router;

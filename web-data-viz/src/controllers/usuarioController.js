@@ -27,6 +27,22 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             senha: resultadoAutenticar[0].senha,
                         });
+
+                        // saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
+                        //     .then((resultadoSaves) => {
+                        //         if (resultadoSaves.length > 0) {
+                        //             res.json({
+                        //                 idUsuario: resultadoAutenticar[0].idUsuario,
+                        //                 email: resultadoAutenticar[0].email,
+                        //                 nome: resultadoAutenticar[0].nome,
+                        //                 senha: resultadoAutenticar[0].senha,
+                        //                 saves: resultadoSaves
+                        //             });
+                        //             console.log(resultadoSaves);
+                        //         } else {
+                        //             res.status(204).json({ saves: [] });
+                        //         }
+                        //     })
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -58,7 +74,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } 
+    }
     // else if (fkEmpresa == undefined) {
     //     res.status(400).send("Sua empresa a vincular está undefined!");
     // } 
@@ -84,18 +100,7 @@ function cadastrar(req, res) {
     }
 }
 
-function buscarUsuarioPeloId(req, res) {
-    console.log(req.params.id);
-    usuarioModel.buscarUsuarioPeloId(req.params.id)
-    .then(resultado => {
-      res.json(resultado);
-    }).catch(err => {
-      res.status(500).send(err);
-    });
-  }
-
 module.exports = {
     autenticar,
-    cadastrar,
-    buscarUsuarioPeloId
+    cadastrar
 }
