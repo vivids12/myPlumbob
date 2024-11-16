@@ -33,7 +33,21 @@
         <button onclick="cadastroDesafio()">Cadastrar</button>
         <div id="divDesafio"></div>
     </p>
+    <hr>
 
+    <p>Cadastrar objetivo</p>
+    <p>
+        Descrição: <br>
+        <input type="text" placeholder="Descrição" id="inpDescObj"> <br>
+        <select id="slcPeso">
+            <!-- <option value="#">Selecione uma opção</option> -->
+            <option value="1">Fácil</option>
+            <option value="2">Médio</option>
+            <option value="3">Difícil</option>
+        </select> <br>
+        <button onclick="cadastroObjetivo()">Cadastrar</button>
+        <div id="divObjetivo"></div>
+    </p>
     <hr>
     <button onclick="limparSessao()">Sair</button>
     <!-- <p id="btnAquario"></p> -->
@@ -127,6 +141,54 @@
                     //   spanErro.style.display = "block";
                     
                     divDesafio.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+
+    function cadastroObjetivo(){
+        var descVar = inpDescObj.value;
+        var pesoVar = slcPeso.value;
+        var idDesafio = sessionStorage.ID_DESAFIO;
+
+        fetch("/objetivos/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                desc: descVar,
+                peso: pesoVar,
+                idDesafio: idDesafio,
+                idUsuario: idUsuario
+            }), 
+        }) 
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+                    
+                    divObjetivo.innerHTML =
                         "Cadastro realizado com sucesso!";
                     //   spanErro.style.color = '#30B945';
 

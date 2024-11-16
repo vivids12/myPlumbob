@@ -1,7 +1,7 @@
-var desafioModel = require("../models/desafioModel");
+var objetivoModel = require("../models/objetivoModel");
 
 function listar(req, res) {
-    desafioModel.listar().then(function(resultado){
+    objetivoModel.listar().then(function(resultado){
         // precisamos informar que o resultado voltará para o front-end como uma resposta em json
         res.status(200).json(resultado);
     }).catch(function(erro){
@@ -10,30 +10,26 @@ function listar(req, res) {
 }
 
 function cadastrar(req, res) {
-    var nome = req.body.nome;
+    var descricao = req.body.desc;
+    var peso = req.body.peso;
+    var idDesafio = req.body.idDesafio;
     var idUsuario = req.body.idUsuario;
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
     }
 
-    desafioModel.cadastrar(nome, idUsuario).then(function(resposta){
+    objetivoModel.cadastrar(descricao, peso, idDesafio, idUsuario).then(function(resposta){
         res.status(200).send("Desafio criado com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     })
-
-    objetivoModel.cadastrar(nome, idUsuario).then(function(resposta){
-      res.status(200).send("Desafio criado com sucesso");
-  }).catch(function(erro){
-      res.status(500).json(erro.sqlMessage);
-  })
 }
 
-function buscarDesafiosPorUsuario(req, res) {
-    var idUsuario = req.params.idUsuario;
+function buscarObjetivosPorDesafio(req, res) {
+    var idDesafio = req.params.idDesafio;
   
-    desafioModel.buscarDesafiosPorUsuario(idUsuario).then((resultado) => {
+    objetivoModel.buscarObjetivosPorDesafio(idDesafio).then((resultado) => {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
       } else {
@@ -49,5 +45,5 @@ function buscarDesafiosPorUsuario(req, res) {
 module.exports = {
     listar,
     cadastrar,
-    buscarDesafiosPorUsuario
+    buscarObjetivosPorDesafio
 }

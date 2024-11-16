@@ -14,7 +14,15 @@ function buscarDesafiosPorUsuario(idUsuario) {
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-  }
+}
+
+function selecionarDesafioPorUsuario(idUsuario) {
+
+    var instrucaoSql = `SELECT nome FROM desafio WHERE fkUsuario = ${idUsuario}`;
+  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 function cadastrar(nome, idUsuario) {
     var instrucao = '';
@@ -40,5 +48,6 @@ function cadastrar(nome, idUsuario) {
 module.exports = {
     cadastrar,
     listar,
-    buscarDesafiosPorUsuario
+    buscarDesafiosPorUsuario,
+    selecionarDesafioPorUsuario
 };

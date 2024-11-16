@@ -4,12 +4,12 @@ var router = express.Router();
 var desafioController = require("../controllers/desafioController");
 
 router.post("/cadastrar", function (req, res) {
-    // função a ser chamada quando acessar /saves/cadastrar
+    // função a ser chamada quando acessar /desafios/cadastrar
     desafioController.cadastrar(req, res);
 });
 
 router.get("/listar", function (req, res) {
-    // função a ser chamada quando acessar /saves/listar
+    // função a ser chamada quando acessar /desafios/listar
     desafioController.listar(req, res);
 });
 
