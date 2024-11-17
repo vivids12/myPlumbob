@@ -8,6 +8,8 @@
 
     <link rel="shortcut icon" type="imagex/png" href="../img/icone.ico">
 
+    <script src="js/sessao.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
@@ -19,20 +21,23 @@
     <link rel="stylesheet" sizes="16x16 32x32 64x64" href="../css/home.css">
 </head>
 <!-- , exibirSaves() -->
+
 <body onload="validarSessao()">
     <header>
         <img id="logo" src="../img/logoDark.png" alt="logo">
         <span class="paginas">
-            <a href="index.html">Home</a>
+            <a href="home.html">Home</a>
             <a href="desafios.html">Desafios</a>
+            <a onclick="limparSessao()">Sair</a>
         </span>
     </header>
 
     <div id="corpo">
-        <h3>Sul sul, <span id="b_usuario">usuario</span></h3>
+        <h2>Sul sul, <span id="b_usuario">usuario</span></h2>
+        <h3>Id do usuario: <span id="idUser"></span></h3>
 
         <div id="divSaves">
-            <div id="save1">
+            <div id="save1" class="save semSave">
                 <h4 id="nome1">Nome do save</h4>
                 <span>
                     <img src="../img/svg/saveSD.svg" alt="Sem desafio">
@@ -41,32 +46,70 @@
                 <p>Data de criação: <span id="dtSave1">01/01/2024</span></p>
                 <p>Descrição do save</p>
             </div>
+
+            <div id="save2" class="save viuvaNegra">
+                <h4 id="nome2">Nome do save</h4>
+                <span>
+                    <img src="../img/svg/saveVN.svg" alt="Sem desafio">
+                    <p>Nenhum desafio relacionado</p>
+                </span>
+                <p>Data de criação: <span id="dtSave2">01/01/2024</span></p>
+                <p>Descrição do save</p>
+            </div>
+
+            <div id="save3" class="save bebes">
+                <h4 id="nome3">Nome do save</h4>
+                <span>
+                    <img src="../img/svg/saveBB.svg" alt="Sem desafio">
+                    <p>Nenhum desafio relacionado</p>
+                </span>
+                <p>Data de criação: <span id="dtSave3">01/01/2024</span></p>
+                <p>Descrição do save</p>
+            </div>
+        </div>
+        <span class="btAddSave" onclick="clickSave()">
+            Adicionar novo save
+        </span>
+
+        <div id="addSave">
+            <span id="formAddSave">
+                <h3>Adicionar novo save</h3>
+                <p>Nome</p>
+                <input type="text" placeholder="Nome" id="inpNomeSave">
+                <p>Data de criação</p> 
+                <input type="date" id="inpDtCriacao">
+                <p>Descrição</p>
+                <textarea id="txtSave" placeholder="Descrição"></textarea>
+            </span>
+            <span id="formAddDesafio">
+                <div style="display: flex; flex-direction: column;">
+                    <h4>Deseja relacionar a algum desafio?</h4>
+                    <p>
+                        <input name="formDesafio" type="radio" id="desafio7BB" value="7bbs">
+                        <label for="desafio7BB" class="optBB">
+                            Desafio dos 7 bebes
+                            <img src="../img/svg/optBB.svg" alt="">
+                        </label>
+                    </p>
+                    <p>
+                        <input name="formDesafio" type="radio" id="desafioVN" value="VN">
+                        <label for="desafioVN" class="optVN">
+                            Desafio da viúva negra
+                            <img src="../img/svg/optVN.svg" alt="">
+                        </label>
+                    </p>
+                    <p>
+                        <input name="formDesafio" type="radio" id=semDesafio" value="VN">
+                        <label for="semDesafio">Ficar sem desafio</label>
+                    </p>
+                </div>
+                <!-- <button onclick="cadastroDesafio()">Cadastrar</button> -->
+                <button onclick="cadastroSave(),cadastroDesafio()">Adicionar desafio</button>
+            </span>
         </div>
     </div>
-    
-    <p>Cadastrar save</p>
-    Nome: <br>
-    <input type="text" placeholder="Nome" id="inpNomeSave"><br>
-    Data de criação: <br>
-    <input type="date" id="inpDtCriacao"> <br>
-    Descrição: <br>
-    <textarea id="txtSave" placeholder="Descrição"></textarea> <br>
-    <button onclick="cadastroSave()">Enviar</button> <br>
-    Id do usuario: <span id="idUser"></span>
     <div id="divSave"></div>
-    <hr>
-
-    <p>Cadastrar desafio</p>
-    <p>
-        <input name="formDesafio" type="radio" id="desafio7BB" value="7bbs">
-        <label for="desafio7BB">Desafio dos 7 bebes</label> <br>
-
-        <input name="formDesafio" type="radio" id="desafioVN" value="VN">
-        <label for="desafioVN">Desafio da viuva negra</label><br>
-        <button onclick="cadastroDesafio()">Cadastrar</button>
-        <div id="divDesafio"></div>
-    </p>
-    <hr>
+    <div id="divDesafio"></div>
 
     <p>Cadastrar objetivo</p>
     <p>
@@ -79,7 +122,7 @@
             <option value="3">Difícil</option>
         </select> <br>
         <button onclick="cadastroObjetivo()">Cadastrar</button>
-        <div id="divObjetivo"></div>
+    <div id="divObjetivo"></div>
     </p>
     <hr>
     <button onclick="limparSessao()">Sair</button>
@@ -87,13 +130,24 @@
     <div class="cards" id="cardAquarios">
     </div>
 </body>
+
 </html>
 <script>
+    addSave.style.display = 'none';
+    function clickSave(){
+
+        if(addSave.style.display == 'none'){
+            addSave.style.display = 'grid';
+        } else {
+            addSave.style.display = 'none';
+        }
+    }
+
     // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
     // var idUsuario = sessionStorage.ID_USUARIO;
     idUser.innerHTML = sessionStorage.ID_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
-    
+
     function cadastroSave() {
         var nomeVar = inpNomeSave.value;
         var dtCriacaoVar = inpDtCriacao.value;
@@ -143,9 +197,11 @@
         return false;
     }
 
-    function cadastroDesafio(){
+    function cadastroDesafio() {
         var desafio = '';
-        if (desafio7BB.checked){
+        if (semDesafio.checked){
+            desafio = 'semDesafio';
+        } else if (desafio7BB.checked) {
             desafio = '7bbs';
         } else {
             desafio = 'viuva negra';
@@ -165,14 +221,14 @@
                 idUsuario: idUsuario,
                 // emailServer: emailVar,
                 // senhaServer: senhaVar
-            }), 
-        }) 
+            }),
+        })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-                
+
                 if (resposta.ok) {
                     //   spanErro.style.display = "block";
-                    
+
                     divDesafio.innerHTML =
                         "Cadastro realizado com sucesso!";
                     //   spanErro.style.color = '#30B945';
@@ -196,7 +252,7 @@
         return false;
     }
 
-    function cadastroObjetivo(){
+    function cadastroObjetivo() {
         var descVar = inpDescObj.value;
         var pesoVar = slcPeso.value;
         var idDesafio = sessionStorage.ID_DESAFIO;
@@ -213,14 +269,14 @@
                 peso: pesoVar,
                 idDesafio: idDesafio,
                 idUsuario: idUsuario
-            }), 
-        }) 
+            }),
+        })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-                
+
                 if (resposta.ok) {
                     //   spanErro.style.display = "block";
-                    
+
                     divObjetivo.innerHTML =
                         "Cadastro realizado com sucesso!";
                     //   spanErro.style.color = '#30B945';
@@ -244,23 +300,23 @@
         return false;
     }
 
-// function exibirSaves() {
-//     JSON.parse(sessionStorage.SAVES).forEach(item => {
-//         document.getElementById("cardAquarios").innerHTML += `
-//             <div class="card-aquario">
-//                 <div class="title-aquario">
-//                     <h1>${item.descricao}</h1>
-//                 </div>
-//                 <div class="desc-aquario">
-//                     <div class="temperatura">
-//                         <p id="temp_aquario_${item.nome}">-°C</p>
-//                     </div>
-//                     <div class="cor-alerta" id="card_${item.id}"></div>
-//                 </div>
-//             </div>
-//         `;
-//     });
-// }
+    // function exibirSaves() {
+    //     JSON.parse(sessionStorage.SAVES).forEach(item => {
+    //         document.getElementById("cardAquarios").innerHTML += `
+    //             <div class="card-aquario">
+    //                 <div class="title-aquario">
+    //                     <h1>${item.descricao}</h1>
+    //                 </div>
+    //                 <div class="desc-aquario">
+    //                     <div class="temperatura">
+    //                         <p id="temp_aquario_${item.nome}">-°C</p>
+    //                     </div>
+    //                     <div class="cor-alerta" id="card_${item.id}"></div>
+    //                 </div>
+    //             </div>
+    //         `;
+    //     });
+    // }
 
 
 

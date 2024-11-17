@@ -1,0 +1,22 @@
+escolher desafio
+cadastra
+cadastrar save e sim
+pagina de progresso
+	nome do desafio
+	descrição
+	regras e objetivos
+	ver o save que está relacionado
+	quanto falta para acabar
+	quando ele começou
+ver pagina geral
+	saves e desafios que estão relacionados
+	cadastrar novo save
+pagina do save sem desafio
+	nome do save
+	escolher um desafio
+	criar objetivos ou regras
+	quando criou o save
+
+
+cadastrar save e sim
+ver o progresso no desafio
