@@ -9,26 +9,12 @@
   'opsz' 24
 }
 
-h1, h2, h3, h4, h5, h6{
-    font-weight: 700;
-    margin: 0;
-}
-
 * {
     box-sizing: border-box;
     font-family: "League Spartan", sans-serif;
 }
 
-html{
-    background-image: url(../img/svg/fundoHome.svg) !important;
-    background-repeat: no-repeat; 
-    background-position: top right;
-    /* min-height: 100vh; */
-    /* font-size: 16px; */
-}
-
 body {
-    background-color: #05293700 !important;
     display: flex;
     flex-direction: column;
     /* align-items: center;
@@ -135,214 +121,80 @@ header {
     height: 100vh; */
     text-align: left;
     padding: 20vh;
+    padding-top: 12vh;
+    padding-bottom: 2vh;
 }
 
 #inicio h1{
-    font-size: 14vh;
+    font-size: 10vh;
     font-weight: 700;
     line-height: 15vh;
     width: 49vw;
     margin: 0;
 }
 
-#inicio p{
-    font-size: 3vh;
+/* DESAFIOS */
+
+.desafio{
+    margin: 2vh 20vh;
+    color: white;
+    padding: 5vh;
+    border-radius: 2vh;
     line-height: 4vh;
-    width: 27vw;
-}
-
-/* PASSO A PASSO (DESAFIO) */
-
-/* #desafio {
-    padding: 0 20vh;
-} */
-
-h2{
-    font-size: 5vh;
-    margin: 2vw 20vh;
-    color: #052937;
-}
-
-h3 {
-    color: #4276B7;
-    font-size: 3.5vh;
-    margin: 1.5vw 20vh;
-}
-
-.pCorpo{
-    font-size: 2.7vh;
-    line-height: 3.5vh;
-    margin: 0 20vh;
-}
-
-.divCarrosel {
-    width: 100% !important;
-    background: linear-gradient(to right, rgba(68,188,226,1) 0%, rgba(66,124,185,1) 100%);
-    height: 65vh !important;
-    margin-top: 2vw;
-
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-}
-
-.cartao{
-    background: #29AF3F;
-    width: 100%;
-    height: 100%;
-    border-radius: 1vh;
-
-    color: white;
-
-    display: grid !important;
-    grid-template-columns: 60% 30%;
-    justify-content: center;
-    align-items: center;
-
-    -webkit-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
-    box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
-}
-
-.cartao img{
-    height: 45vh;
-}
-
-.cartao p {
-    font-size: 2.7vh;
-    line-height: 3.5vh;
-    margin: 0 !important;
-    width: 38vw;
-}
-
-h4 {
-    font-size: 3.5vh;
-    margin: 2vh 0;
-}
-
-.cartao .esq{
-    padding: 8vh 0;
-    height: 100%;
-    display: grid;
-}
-
-.cartao a {
-    color: #BD2924;
-    background-color: white;
-    text-decoration: none;
-
-    width: 10vw;
-    height: 4vh;
-    border-radius: 0.6vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: end;
-
-    font-weight: 600;
-    transition: ease-in-out 0.5s;
-}
-
-.cartao a:hover, .cartao a:focus{
-    transform: scale(1.1);
-}
-
-.iconSetas{
-    color: white;
-    font-size: 100px;
-    cursor: pointer;
-}
-
-#cadastrese{
-    margin: 8vh 0;
+    font-size: 2.5vh;
     display: flex;
     flex-direction: column;
+}
+
+.desafio a{
     width: 100%;
-    height: fit-content;
-}
-
-#cadastrese span{
-    background: linear-gradient(to right, rgba(246,41,12,1) 0%, rgba(41,175,63,1) 0%, rgba(49,255,52,1) 100%);
-    width: 100%;
-    height: 12vh;
-    margin: 4vh 0;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 2vw;
-}
-
-#cadastrese p{
-    font-size: 2.7vh;
-    line-height: 3.5vh;
-    margin: 0 20vh;
-}
-
-.btSecundario {
-    color: white;
-    text-decoration: none;
-    font-size: 3vh;
-    font-weight: 600;
-    transition: ease-in-out 0.5s;
-}
-
-.btPrincipal {
-    background-color: white;
-    width: 16vw;
     height: 6vh;
-    border-radius: 0.6vh;
+    background-color: white;
+    border-radius: 1vh;
+    font-size: 3.3vh;
+    font-weight: 700;
     text-decoration: none;
-    
+
     display: flex;
+    align-items: center;
     justify-content: center;
+
+    transition: ease-in-out 0.2s;
+}
+
+.desafio a:hover, .desafio a:focus {
+    transform: scale(0.95);
+}
+
+.desafio p{
+    text-align: center;
+}
+
+#desafioVN{
+    background: linear-gradient(135deg, #c12a25 0%, rgba(193,42,37,1) 0%, #5b1412 100%);
+}
+
+#desafioVN a{
+    color: #5b1412;
+}
+
+#desafio7BB{
+    background: linear-gradient(135deg, #c12a25 0%, #e53f6e 0%, #bb1c49 100%);
+}
+
+#desafio7BB a{
+    color: #bb1c49;
+}
+
+.desafio h2{
+    text-align: center;
+    font-size: 5vh;
+}
+
+.desafio div{
+    display: grid;
+    grid-template-columns: 60% 40%;
     align-items: center;
-    
-    color: #29AF3F;
-    font-size: 3vh;
-    font-weight: 600;
-
-    transition: ease-in-out 0.5s;
-}
-
-.btPrincipal:hover, .btPrincipal:focus {
-    transform: scale(0.9);
-    color: #29AF3F;
-    text-decoration: none;
-}
-
-.btSecundario:hover, .btSecundario:focus {
-    transform: scale(0.9);
-    color: white;
-    text-decoration: none;
-}
-
-#aproveite{
-    display: flex;
-    flex-direction: column;
-}
-
-#aproveite .icone{
-    width: 1.5vw;
-}
-
-#aproveite .linha{
-    display: flex; 
-    flex-direction: row; 
-    justify-content: start; 
-    align-items: center;
-}
-
-#aproveite p{
-    width: fit-content; 
-    margin-right: 0.5vw;
-}
-
-.imgAproveite{
-    align-self: center;
-    margin: 5vh 0;
 }
 
 /* RODAPÉ */
@@ -354,6 +206,7 @@ footer{
     color: white;
     background-color: #4276B7;
     padding: 1.5vw 6vh;
+    margin-top: 5vh;
 }
 
 footer h2{

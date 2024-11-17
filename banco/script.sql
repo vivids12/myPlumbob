@@ -11,8 +11,9 @@ CREATE TABLE usuario(
 SELECT * FROM usuario;
 
 CREATE TABLE desafio(
-	idDesafio INT PRIMARY KEY AUTO_INCREMENT,
+	idDesafio INT AUTO_INCREMENT,	
     fkUsuario INT,
+    PRIMARY KEY (idDesafio, fkUsuario),
     nome VARCHAR(45),
     descricao VARCHAR(500),
     CONSTRAINT fkUserDesafio FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)

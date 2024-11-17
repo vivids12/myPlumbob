@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Plumbob | Home</title>
+
+    <link rel="shortcut icon" type="imagex/png" href="../img/icone.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=chevron_rightchevron_left" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" sizes="16x16 32x32 64x64" href="../css/home.css">
+</head>
+<!-- , exibirSaves() -->
+<body onload="validarSessao()">
+    <header>
+        <img id="logo" src="../img/logoDark.png" alt="logo">
+        <span class="paginas">
+            <a href="index.html">Home</a>
+            <a href="desafios.html">Desafios</a>
+        </span>
+    </header>
+
+    <div id="corpo">
+        <h3>Sul sul, <span id="b_usuario">usuario</span></h3>
+
+        <div id="divSaves">
+            <div id="save1">
+                <h4 id="nome1">Nome do save</h4>
+                <span>
+                    <img src="../img/svg/saveSD.svg" alt="Sem desafio">
+                    <p>Nenhum desafio relacionado</p>
+                </span>
+                <p>Data de criação: <span id="dtSave1">01/01/2024</span></p>
+                <p>Descrição do save</p>
+            </div>
+        </div>
+    </div>
+    
+    <p>Cadastrar save</p>
+    Nome: <br>
+    <input type="text" placeholder="Nome" id="inpNomeSave"><br>
+    Data de criação: <br>
+    <input type="date" id="inpDtCriacao"> <br>
+    Descrição: <br>
+    <textarea id="txtSave" placeholder="Descrição"></textarea> <br>
+    <button onclick="cadastroSave()">Enviar</button> <br>
+    Id do usuario: <span id="idUser"></span>
+    <div id="divSave"></div>
+    <hr>
+
+    <p>Cadastrar desafio</p>
+    <p>
+        <input name="formDesafio" type="radio" id="desafio7BB" value="7bbs">
+        <label for="desafio7BB">Desafio dos 7 bebes</label> <br>
+
+        <input name="formDesafio" type="radio" id="desafioVN" value="VN">
+        <label for="desafioVN">Desafio da viuva negra</label><br>
+        <button onclick="cadastroDesafio()">Cadastrar</button>
+        <div id="divDesafio"></div>
+    </p>
+    <hr>
+
+    <p>Cadastrar objetivo</p>
+    <p>
+        Descrição: <br>
+        <input type="text" placeholder="Descrição" id="inpDescObj"> <br>
+        <select id="slcPeso">
+            <!-- <option value="#">Selecione uma opção</option> -->
+            <option value="1">Fácil</option>
+            <option value="2">Médio</option>
+            <option value="3">Difícil</option>
+        </select> <br>
+        <button onclick="cadastroObjetivo()">Cadastrar</button>
+        <div id="divObjetivo"></div>
+    </p>
+    <hr>
+    <button onclick="limparSessao()">Sair</button>
+    <!-- <p id="btnAquario"></p> -->
+    <div class="cards" id="cardAquarios">
+    </div>
+</body>
+</html>
+<script>
+    // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    // var idUsuario = sessionStorage.ID_USUARIO;
+    idUser.innerHTML = sessionStorage.ID_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    
+    function cadastroSave() {
+        var nomeVar = inpNomeSave.value;
+        var dtCriacaoVar = inpDtCriacao.value;
+        var descVar = txtSave.value;
+
+        fetch("/saves/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nome: nomeVar,
+                dtCriacao: dtCriacaoVar,
+                desc: descVar,
+                idUsuario: idUsuario,
+                // emailServer: emailVar,
+                // senhaServer: senhaVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+
+                    divSave.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+
+    function cadastroDesafio(){
+        var desafio = '';
+        if (desafio7BB.checked){
+            desafio = '7bbs';
+        } else {
+            desafio = 'viuva negra';
+        }
+
+        fetch("/desafios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nome: desafio,
+                // dtCriacao: dtCriacaoVar,
+                // desc: descVar,
+                idUsuario: idUsuario,
+                // emailServer: emailVar,
+                // senhaServer: senhaVar
+            }), 
+        }) 
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+                    
+                    divDesafio.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+
+    function cadastroObjetivo(){
+        var descVar = inpDescObj.value;
+        var pesoVar = slcPeso.value;
+        var idDesafio = sessionStorage.ID_DESAFIO;
+
+        fetch("/objetivos/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                desc: descVar,
+                peso: pesoVar,
+                idDesafio: idDesafio,
+                idUsuario: idUsuario
+            }), 
+        }) 
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+                    
+                    divObjetivo.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+
+// function exibirSaves() {
+//     JSON.parse(sessionStorage.SAVES).forEach(item => {
+//         document.getElementById("cardAquarios").innerHTML += `
+//             <div class="card-aquario">
+//                 <div class="title-aquario">
+//                     <h1>${item.descricao}</h1>
+//                 </div>
+//                 <div class="desc-aquario">
+//                     <div class="temperatura">
+//                         <p id="temp_aquario_${item.nome}">-°C</p>
+//                     </div>
+//                     <div class="cor-alerta" id="card_${item.id}"></div>
+//                 </div>
+//             </div>
+//         `;
+//     });
+// }
+
+
+
+    // window.onload = exibirSavesDoUsuario();
+
+    // function exibirSavesDoUsuario() {
+    //     var saves = JSON.parse(sessionStorage.SAVES);
+    //     saves.forEach(item => {
+    //         document.getElementById("btnAquario").innerHTML += `
+    //         <button class="btn-chart" onclick="exibirSaves(${item.idSave})" id="btnAquario${item.idSave}">${item.descricao}</button>
+    //         `
+
+    //         document.getElementById("graficos").innerHTML += `
+    //             <div id="grafico${item.idSave}" class="display-none">
+    //                 <h3 class="tituloGraficos">
+    //                     <span id="tituloAquario${item.idSave}">${item.descricao}</span>
+    //                 </h3>
+    //                 <div class="graph">
+    //                     <canvas id="myChartCanvas${item.idSave}"></canvas>
+    //                 </div>
+    //                 <div class="label-captura">
+    //                     <p id="avisoCaptura${item.idSave}" style="color: white"></p>
+    //                 </div>
+    //             </div>
+    //         `
+
+    //         obterDadosGrafico(item.idSave)
+    //     });
+
+    //     if (saves.length > 0) {
+    //         exibirAquario(aquarios[0].id)
+    //     }
+    // }
+</script>
