@@ -190,6 +190,10 @@ header {
 
     display: none;
     grid-template-columns: 1fr 1fr;
+
+    -webkit-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
+    box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
 }
 
 #addSave h3{
@@ -268,6 +272,10 @@ header {
 }
 
 #formAddDesafio label:hover, #formAddDesafio label:focus{
+    transform: scale(0.95);
+}
+
+#formAddDesafio input:checked + label{
     transform: scale(0.95);
 }
 

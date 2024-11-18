@@ -5,18 +5,31 @@ CREATE TABLE usuario(
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
     email VARCHAR(45),
-    senha varchar(15)
+    senha varchar(50)
 );
 
 SELECT * FROM usuario;
+SELECT * FROM save;
+INSERT INTO usuario VALUES (DEFAULT, 'vivi', 'vivi@gmail.com', '123');
+
+INSERT INTO save VALUES (DEFAULT, 2, 'save1', 'algumacoisa', '2024-01-01');
+
+CREATE TABLE save(
+	idSave INT PRIMARY KEY AUTO_INCREMENT,
+    fkUsuario INT NOT NULL,
+    nome VARCHAR(45),
+    descricao VARCHAR(100),
+    dtCriacao DATE,
+    CONSTRAINT fkSaveUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)
+);
 
 CREATE TABLE desafio(
 	idDesafio INT AUTO_INCREMENT,	
-    fkUsuario INT,
-    PRIMARY KEY (idDesafio, fkUsuario),
+    fkSave INT,
+    PRIMARY KEY (idDesafio, fkSave),
     nome VARCHAR(45),
     descricao VARCHAR(500),
-    CONSTRAINT fkUserDesafio FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)
+    CONSTRAINT fkSaveDesafio FOREIGN KEY (fkSave) REFERENCES save(idSave)
 );
 
 INSERT INTO desafio(nome,descricao) VALUES ('Desafio da viúva negra', 'O Desafio da Viúva Negra tem 
@@ -58,7 +71,7 @@ INSERT INTO regras(fkDesafio, descricao) VALUES
     (1,'O limite máximo de dinheiro que a Sim pode acumular antes de se casar é §1.200'),
     (1,'Caso o primeiro casamento seja planejado com a expansão Histórias de Casamento e você não tiver dinheiro suficiente, é permitido usar cheat para adicionar os fundos necessários e pagar pela cerimômia;'),
     (1,'É opcional organizar uma festa de casamento, mas é obrigatório fazer uma viagem de férias pra simular a lua de mel pra qualquer destino por pelo menos 1 dia'),
-	(1,'Tenha uma foto do casamento ou uma selfie com o marido para guardar de recordação. Essa foto deve ficar exposta!";'),
+	(1,'Tenha uma foto do casamento ou uma selfie com o marido para guardar de recordação. Essa foto deve ficar exposta!'),
 	(1,'Todos os maridos devem trabalhar normalmente e ganhar pelo menos 3 promoções em suas carreiras antes de morrerem'),
     (1,'A Sim deverá ter outro pretendente e manter o caso em segredo até a morte do marido atual'),
     (1,'Se o pretendente já for casado, a Sim precisa convencê-lo a se separar e se tornar inimiga da ex esposa'),
@@ -78,28 +91,3 @@ INSERT INTO objetivos(fkDesafio, progresso, descricao, peso) VALUES
     (1, FALSE, 'Alcançar nível 10 na habilidade de Culinária', 3),
     (1, FALSE, 'Alcançar nível 10 na habilidade de Gourmet', 3),
     (1, FALSE, 'Acumular §1.000.000 em dinheiro', 4);
-
-CREATE TABLE save(
-	idSave INT PRIMARY KEY AUTO_INCREMENT,
-    fkDesafio INT,
-    fkUsuario INT NOT NULL,
-    nome VARCHAR(45),
-    descricao VARCHAR(100),
-    dtCriacao DATE,
-    CONSTRAINT fkSaveDesafio FOREIGN KEY (fkDesafio) REFERENCES desafio(idDesafio),
-    CONSTRAINT fkSaveUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)
-);
-
-CREATE TABLE sim(
-	idSim INT PRIMARY KEY AUTO_INCREMENT,
-    fkSave INT NOT NULL,
-    nome VARCHAR(45),
-    idade VARCHAR(45),
-    especie VARCHAR(45),
-    profissao VARCHAR(45),
-    aspiracao VARCHAR(45),
-    descricao VARCHAR(200),
-    simPrincipal BOOLEAN,
-    geracao INT,
-    CONSTRAINT fkSimSave FOREIGN KEY (fkSave) REFERENCES save(idSave)
-);

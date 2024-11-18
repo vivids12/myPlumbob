@@ -1,4 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
+var saveModel = require("../models/saveModel");
 // var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
@@ -21,28 +22,29 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        res.json({
-                            idUsuario: resultadoAutenticar[0].idUsuario,
-                            email: resultadoAutenticar[0].email,
-                            nome: resultadoAutenticar[0].nome,
-                            senha: resultadoAutenticar[0].senha,
-                        });
+                        // res.json({
+                        //     idUsuario: resultadoAutenticar[0].idUsuario,
+                        //     email: resultadoAutenticar[0].email,
+                        //     nome: resultadoAutenticar[0].nome,
+                        //     senha: resultadoAutenticar[0].senha,
+                        // });
 
-                        // saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
-                        //     .then((resultadoSaves) => {
-                        //         if (resultadoSaves.length > 0) {
-                        //             res.json({
-                        //                 idUsuario: resultadoAutenticar[0].idUsuario,
-                        //                 email: resultadoAutenticar[0].email,
-                        //                 nome: resultadoAutenticar[0].nome,
-                        //                 senha: resultadoAutenticar[0].senha,
-                        //                 saves: resultadoSaves
-                        //             });
-                        //             console.log(resultadoSaves);
-                        //         } else {
-                        //             res.status(204).json({ saves: [] });
-                        //         }
-                        //     })
+                        saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
+                            .then((resultadoSaves) => {
+                                if (resultadoSaves.length > 0) {
+                                    res.json({
+                                        idUsuario: resultadoAutenticar[0].idUsuario,
+                                        email: resultadoAutenticar[0].email,
+                                        nome: resultadoAutenticar[0].nome,
+                                        senha: resultadoAutenticar[0].senha,
+                                        saves: resultadoSaves[0]
+                                    });
+                                    console.log(resultadoSaves);
+                                    console.log(resultadoSaves.saves);
+                                } else {
+                                    res.status(204).json({ saves: [] });
+                                }
+                            })
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
