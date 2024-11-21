@@ -11,8 +11,15 @@ CREATE TABLE usuario(
 SELECT * FROM usuario;
 SELECT * FROM save;
 INSERT INTO usuario VALUES (DEFAULT, 'vivi', 'vivi@gmail.com', '123');
+INSERT INTO usuario VALUES (DEFAULT, 'gabi', 'gabi@gmail.com', '123');
 
-INSERT INTO save VALUES (DEFAULT, 2, 'save1', 'algumacoisa', '2024-01-01');
+INSERT INTO save VALUES (DEFAULT, 1, 'save1', 'algumacoisa', '2024-01-01');
+INSERT INTO save VALUES (DEFAULT, 3, 'save2', 'algumacoisa', '2024-01-01');
+
+
+INSERT INTO save VALUES (DEFAULT, 2, 'save teste', 'algumacoisa', '2024-01-01');
+
+UPDATE save SET fkUsuario = 3 WHERE idSave = 4; 
 
 CREATE TABLE save(
 	idSave INT PRIMARY KEY AUTO_INCREMENT,
@@ -22,6 +29,8 @@ CREATE TABLE save(
     dtCriacao DATE,
     CONSTRAINT fkSaveUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)
 );
+
+SELECT * FROM save JOIN usuario ON fkUsuario = idUsuario WHERE idUsuario = 2;
 
 CREATE TABLE desafio(
 	idDesafio INT AUTO_INCREMENT,	

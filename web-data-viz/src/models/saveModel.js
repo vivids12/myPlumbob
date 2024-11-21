@@ -10,7 +10,7 @@ function listar() {
 
 function buscarSavesPorUsuario(idUsuario) {
 
-    var instrucaoSql = `SELECT nome FROM save WHERE fkUsuario = ${idUsuario}`;
+    var instrucaoSql = `SELECT idSave, nome, DATE_FORMAT(dtCriacao, '%d/%m/%Y' ) AS dtCriacao , descricao FROM save WHERE fkUsuario = ${idUsuario}`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

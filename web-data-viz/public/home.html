@@ -66,6 +66,13 @@
         var dtCriacaoVar = inpDtCriacao.value;
         var descVar = txtSave.value;
 
+        var desafio = '';
+        if (desafio7BB.checked){
+            desafio = '7bbs';
+        } else {
+            desafio = 'viuva negra';
+        }
+
         fetch("/saves/cadastrar", {
             method: "POST",
             headers: {
@@ -78,6 +85,7 @@
                 dtCriacao: dtCriacaoVar,
                 desc: descVar,
                 idUsuario: idUsuario,
+                nomeDesafio: desafio,
                 // emailServer: emailVar,
                 // senhaServer: senhaVar
             }),
@@ -97,6 +105,55 @@
                     //   }, "1000");
 
                     limparFormulario();
+                    // finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+        return false;
+    }
+
+    function savesPorUsuario(){
+        fetch("/saves/buscarSavesPorUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nome: desafio,
+                // dtCriacao: dtCriacaoVar,
+                // desc: descVar,
+                idUsuario: idUsuario,
+                // emailServer: emailVar,
+                // senhaServer: senhaVar
+            }), 
+        }) 
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                
+                if (resposta.ok) {
+                    //   spanErro.style.display = "block";
+                    
+                    divDesafio.innerHTML =
+                        "Cadastro realizado com sucesso!";
+                    //   spanErro.style.color = '#30B945';
+
+
+                    //   setTimeout(() => {
+                    //     window.location = "login.html";
+                    //   }, "1000");
+
+                    limparFormulario();
+
+
+                    fetch
                     // finalizarAguardar();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
@@ -150,6 +207,9 @@
                     //   }, "1000");
 
                     limparFormulario();
+
+
+                    fetch
                     // finalizarAguardar();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
@@ -214,18 +274,10 @@
 function exibirSaves() {
     JSON.parse(sessionStorage.SAVES).forEach(item => {
         document.getElementById("divSave").innerHTML += `
-            <div class="card-aquario">
-                <div class="title-aquario">
-                    <h1>${item.descricao}</h1>
-                </div>
-                <div class="desc-aquario">
-                    <div class="temperatura">
-                        <p id="temp_aquario_${item.nome}">-°C</p>
-                    </div>
-                    <div class="cor-alerta" id="card_${item.id}"></div>
-                </div>
-            </div>
-        `;
+            <hr>
+            ${item.nome} <br>
+            ${item.dtCriacao} <br>
+            ${item.descricao} `;
     });
 }
 

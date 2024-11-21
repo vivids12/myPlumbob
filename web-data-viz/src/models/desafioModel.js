@@ -24,18 +24,18 @@ function selecionarDesafioPorUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function cadastrar(nome, idUsuario) {
+function cadastrar(nomeDesafio) {
     var instrucao = '';
-    if (nome == '7bbs'){
+    if (nomeDesafio == '7bbs'){
         instrucao = `
-        INSERT INTO desafio (nome, fkUsuario, descricao) VALUES ('Desafio dos 7 bebês', '${idUsuario}', 
+        INSERT INTO desafio (nome, fkSave, descricao) VALUES ('Desafio dos 7 bebês', (SELECT idSave FROM save ORDER BY idSave DESC LIMIT 1), 
             'Nesse desafio sua sim é recém-casada 
             e descobre que está grávida de 7 bebês. Infelizmente o cônjuge dela não aceita ficar com as criança e 
             a deixa sozinha. Sendo assim, eles se separam e ela precisa cria-los sozinha da melhor maneira.');
     `;
     } else {
         instrucao = `
-        INSERT INTO desafio (nome, fkUsuario, descricao) VALUES ('Desafio da viúva negra', '${idUsuario}', 
+        INSERT INTO desafio (nome, fkSave, descricao) VALUES ('Desafio da viúva negra', (SELECT idSave FROM save ORDER BY idSave DESC LIMIT 1), 
             'O Desafio da Viúva Negra tem como base a espécie de aranha que mata e come o macho após o acasalamento. 
             O desafio consiste em criar uma personagem que se case várias vezes durante a vida, matando cada um dos 
             cônjuges pelo caminho e herdando o seu dinheiro.');

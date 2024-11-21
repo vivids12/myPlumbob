@@ -11,23 +11,16 @@ function listar(req, res) {
 
 function cadastrar(req, res) {
     var nome = req.body.nome;
-    var idUsuario = req.body.idUsuario;
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
     }
 
-    desafioModel.cadastrar(nome, idUsuario).then(function(resposta){
+    desafioModel.cadastrar(nome).then(function(resposta){
         res.status(200).send("Desafio criado com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     })
-
-    objetivoModel.cadastrar(nome, idUsuario).then(function(resposta){
-      res.status(200).send("Desafio criado com sucesso");
-  }).catch(function(erro){
-      res.status(500).json(erro.sqlMessage);
-  })
 }
 
 function buscarDesafiosPorUsuario(req, res) {

@@ -12,7 +12,6 @@ function autenticar(req, res) {
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
-
         usuarioModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
@@ -37,12 +36,17 @@ function autenticar(req, res) {
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
                                         senha: resultadoAutenticar[0].senha,
-                                        saves: resultadoSaves[0]
+                                        saves: resultadoSaves
                                     });
-                                    console.log(resultadoSaves);
-                                    console.log(resultadoSaves.saves);
+                                    // console.log(resultadoSaves);
+                                    // console.log(resultadoSaves.saves);
                                 } else {
-                                    res.status(204).json({ saves: [] });
+                                    res.json({
+                                        idUsuario: resultadoAutenticar[0].idUsuario,
+                                        email: resultadoAutenticar[0].email,
+                                        nome: resultadoAutenticar[0].nome,
+                                        senha: resultadoAutenticar[0].senha,
+                                    });
                                 }
                             })
                     } else if (resultadoAutenticar.length == 0) {
