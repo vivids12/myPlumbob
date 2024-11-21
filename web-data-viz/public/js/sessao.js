@@ -3,6 +3,8 @@ function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
     var nome = sessionStorage.NOME_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
+    var savesUsuario = JSON.stringify(sessionStorage.SAVES);
+    var desafiosUsuario = JSON.stringify(sessionStorage.DESAFIOS);
 
     var b_usuario = document.getElementById("b_usuario");
     // var divID = document.getElementById("divMens");

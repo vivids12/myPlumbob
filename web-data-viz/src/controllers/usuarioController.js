@@ -1,5 +1,6 @@
 var usuarioModel = require("../models/usuarioModel");
 var saveModel = require("../models/saveModel");
+var desafioModel = require("../models/desafioModel");
 // var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
@@ -31,13 +32,18 @@ function autenticar(req, res) {
                         saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
                             .then((resultadoSaves) => {
                                 if (resultadoSaves.length > 0) {
-                                    res.json({
-                                        idUsuario: resultadoAutenticar[0].idUsuario,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        saves: resultadoSaves
-                                    });
+
+                                    desafioModel.buscarDesafiosPorUsuario(resultadoAutenticar[0].idUsuario)
+                                        .then((resultadoDesafios) => {
+                                            res.json({
+                                                idUsuario: resultadoAutenticar[0].idUsuario,
+                                                email: resultadoAutenticar[0].email,
+                                                nome: resultadoAutenticar[0].nome,
+                                                senha: resultadoAutenticar[0].senha,
+                                                saves: resultadoSaves,
+                                                desafios: resultadoDesafios
+                                            });
+                                        })
                                     // console.log(resultadoSaves);
                                     // console.log(resultadoSaves.saves);
                                 } else {
