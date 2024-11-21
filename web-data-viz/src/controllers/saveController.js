@@ -27,14 +27,15 @@ function cadastrar(req, res) {
   saveModel.cadastrar(nome, data, desc, idUsuario)
     .then(
       function (resposta) {
-        res.status(200).send("Save criado com sucesso");
+        // res.status(200).send("Save criado com sucesso");
+        
       }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage);
       })
 
-  desafioModel.cadastrar(nomeDesafio).then(
+  desafioModel.cadastrar(nomeDesafio, idUsuario).then(
     function (resultadoDesafio) {
-      res.status(200).send("Desafio criado com sucesso");
+      res.status(200).send("Desafio e save criados com sucesso");
     }).catch(function (erro) {
       res.status(500).json(erro.sqlMessage);
     })

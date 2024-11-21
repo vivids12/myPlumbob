@@ -10,13 +10,14 @@ function listar(req, res) {
 }
 
 function cadastrar(req, res) {
-    var nome = req.body.nome;
+    var nomeDesafio = req.body.nomeDesafio;
+    var idUsuario = req.body.idUsuario;
 
-    if (nome == undefined) {
+    if (nomeDesafio == undefined) {
         res.status(400).send("Seu nome está undefined!");
     }
 
-    desafioModel.cadastrar(nome).then(function(resposta){
+    desafioModel.cadastrar(nomeDesafio, idUsuario).then(function(resposta){
         res.status(200).send("Desafio criado com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);

@@ -26,10 +26,10 @@ function cadastrar(req, res) {
     })
 }
 
-function buscarObjetivosPorDesafio(req, res) {
+function buscarRegrasPorDesafio(req, res) {
     var idDesafio = req.params.idDesafio;
   
-    objetivoModel.buscarObjetivosPorDesafio(idDesafio).then((resultado) => {
+    objetivoModel.buscarRegrasPorDesafio(idDesafio).then((resultado) => {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
       } else {
@@ -45,5 +45,5 @@ function buscarObjetivosPorDesafio(req, res) {
 module.exports = {
     listar,
     cadastrar,
-    buscarObjetivosPorDesafio
+    buscarRegrasPorDesafio
 }

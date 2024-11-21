@@ -16,14 +16,14 @@ INSERT INTO usuario VALUES (DEFAULT, 'gabi', 'gabi@gmail.com', '123');
 INSERT INTO save VALUES (DEFAULT, 1, 'save1', 'algumacoisa', '2024-01-01');
 INSERT INTO save VALUES (DEFAULT, 3, 'save2', 'algumacoisa', '2024-01-01');
 
-
 INSERT INTO save VALUES (DEFAULT, 2, 'save teste', 'algumacoisa', '2024-01-01');
 
 UPDATE save SET fkUsuario = 3 WHERE idSave = 4; 
 
 CREATE TABLE save(
-	idSave INT PRIMARY KEY AUTO_INCREMENT,
+	idSave INT AUTO_INCREMENT,
     fkUsuario INT NOT NULL,
+    PRIMARY KEY (idSave, fkUsuario),
     nome VARCHAR(45),
     descricao VARCHAR(100),
     dtCriacao DATE,
@@ -31,15 +31,23 @@ CREATE TABLE save(
 );
 
 SELECT * FROM save JOIN usuario ON fkUsuario = idUsuario WHERE idUsuario = 2;
+SELECT idSave FROM save ORDER BY idSave DESC LIMIT 1;
 
 CREATE TABLE desafio(
 	idDesafio INT AUTO_INCREMENT,	
     fkSave INT,
-    PRIMARY KEY (idDesafio, fkSave),
+    fkUsuario INT,
+    PRIMARY KEY (idDesafio, fkSave, fkUsuario),
     nome VARCHAR(45),
     descricao VARCHAR(500),
-    CONSTRAINT fkSaveDesafio FOREIGN KEY (fkSave) REFERENCES save(idSave)
+    CONSTRAINT fkSaveDesafio FOREIGN KEY (fkSave) REFERENCES save(idSave),
+    CONSTRAINT fkUsuarioDesafio FOREIGN KEY (fkUsuario) REFERENCES save(fkUsuario)
 );
+
+SELECT * FROM desafio WHERE fkSave = (SELECT idSave FROM save WHERE fkUsuario = 2);
+
+SELECT s.idSave, s.nome, DATE_FORMAT(dtCriacao, '%d/%m/%Y' ) AS dtCriacao, s.descricao, d.idDesafio, d.nome, d.descricao FROM save AS s 
+	JOIN desafio AS d ON fkSave = idSave WHERE s.fkUsuario = 2;
 
 INSERT INTO desafio(nome,descricao) VALUES ('Desafio da viúva negra', 'O Desafio da Viúva Negra tem 
 	como base a espécie de aranha que mata e come o macho após o acasalamento. O desafio consiste em 
