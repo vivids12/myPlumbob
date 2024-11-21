@@ -28,17 +28,25 @@ function cadastrar(req, res) {
     .then(
       function (resposta) {
         // res.status(200).send("Save criado com sucesso");
-        
+
       }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage);
       })
 
   desafioModel.cadastrar(nomeDesafio, idUsuario).then(
     function (resultadoDesafio) {
-      res.status(200).send("Desafio e save criados com sucesso");
+      // res.status(200).send("Desafio e save criados com sucesso");
     }).catch(function (erro) {
       res.status(500).json(erro.sqlMessage);
     })
+
+  saveModel.buscarSavesPorUsuario(idUsuario)
+    .then(
+      function (respostaSave) {
+        res.status(200).send("Desafio e save criados com sucesso");
+      }).catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+      })
 }
 
 function buscarSavesPorUsuario(req, res) {

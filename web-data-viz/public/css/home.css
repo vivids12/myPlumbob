@@ -104,15 +104,15 @@ header {
     overflow: auto;
 }
 
-#divSaves::-webkit-scrollbar {
+#divSave::-webkit-scrollbar {
     height: 1.5vw;
 }
 
-#divSaves::-webkit-scrollbar-track {
+#divSave::-webkit-scrollbar-track {
     background: none;
 }
 
-#divSaves::-webkit-scrollbar-thumb {
+#divSave::-webkit-scrollbar-thumb {
     background-color: #4276B7;
     border-radius: 10px;
     height: 20px;
