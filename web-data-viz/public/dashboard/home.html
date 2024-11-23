@@ -22,7 +22,7 @@
 </head>
 <!-- , exibirSaves() -->
 
-<body onload="validarSessao(), exibirSaves()">
+<body onload="validarSessao(), temSave()">
     <header>
         <img id="logo" src="../img/logoDark.png" alt="logo">
         <span class="paginas">
@@ -130,15 +130,16 @@
                     pCadastro.style.display = "flex";
                     pCadastro.innerHTML =
                         "Cadastro realizado com sucesso!";
+                        
 
                     resposta.json().then(json => {
                         console.log(json);
                         console.log(JSON.stringify(json));
                         sessionStorage.SAVES = JSON.stringify(json.saves);
                         sessionStorage.DESAFIOS = JSON.stringify(json.desafios);
-                    });
-
-                    exibirSaves();
+                    });          
+                    
+                    temSave();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -150,74 +151,16 @@
         return false;
     }
 
-    function savesPorUsuario() {
-        fetch("/saves/buscarSavesPorUsuario", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nome: desafio,
-                idUsuario: idUsuario,
-            }),
-        })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                    divDesafio.innerHTML =
-                        "Cadastro realizado com sucesso!";
-                    //   spanErro.style.color = '#30B945';
-                    limparFormulario();
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-                // finalizarAguardar();
-            });
-
-        return false;
+    function temSave(){
+        if (sessionStorage.SAVES == '[]'){
+            divSave.style.display = `none`;
+        } else {
+            exibirSaves()
+        }
     }
-
-    // function cadastroObjetivo(){
-    //     var descVar = inpDescObj.value;
-    //     var pesoVar = slcPeso.value;
-    //     var idDesafio = sessionStorage.ID_DESAFIO;
-
-    //     fetch("/objetivos/cadastrar", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             desc: descVar,
-    //             peso: pesoVar,
-    //             idDesafio: idDesafio,
-    //             idUsuario: idUsuario
-    //         }), 
-    //     }) 
-    //         .then(function (resposta) {
-    //             console.log("resposta: ", resposta);
-
-    //             if (resposta.ok) {
-    //                 divObjetivo.innerHTML =
-    //                     "Cadastro realizado com sucesso!";
-    //                 //   spanErro.style.color = '#30B945';
-    //                 limparFormulario();
-    //             } else {
-    //                 throw "Houve um erro ao tentar realizar o cadastro!";
-    //             }
-    //         })
-    //         .catch(function (resposta) {
-    //             console.log(`#ERRO: ${resposta}`);
-    //         });
-
-    //     return false;
-    // }
 
     function exibirSaves() {
+        divSave.style.display = 'flex';
         divSave.innerHTML = '';
         JSON.parse(sessionStorage.SAVES).forEach(item => {
 

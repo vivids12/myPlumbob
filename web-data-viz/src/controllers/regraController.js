@@ -1,4 +1,4 @@
-var objetivoModel = require("../models/objetivoModel");
+var regraModel = require("../models/regraModel");
 
 function listar(req, res) {
     objetivoModel.listar().then(function(resultado){
@@ -26,7 +26,23 @@ function cadastrar(req, res) {
     })
 }
 
-function buscarRegrasPorDesafio(req, res) {
+function cadastrarViuvaNegra(req, res) {
+  regraModel.cadastrarViuvaNegra().then(function(resposta){
+      res.status(200).send("Regras cadastrados com sucesso");
+  }).catch(function(erro){
+      res.status(500).json(erro.sqlMessage);
+  })
+}
+
+function cadastrar7BBs(req, res) {
+  regraModel.cadastrar7BBs().then(function(resposta){
+      res.status(200).send("Regras cadastrados com sucesso");
+  }).catch(function(erro){
+      res.status(500).json(erro.sqlMessage);
+  })
+}
+
+function buscarRegrasPorSave(req, res) {
     var idDesafio = req.params.idDesafio;
   
     objetivoModel.buscarRegrasPorDesafio(idDesafio).then((resultado) => {
@@ -45,5 +61,8 @@ function buscarRegrasPorDesafio(req, res) {
 module.exports = {
     listar,
     cadastrar,
-    buscarRegrasPorDesafio
+    cadastrarViuvaNegra,
+    cadastrar7BBs,
+    buscarRegrasPorSave
+    
 }

@@ -1,6 +1,7 @@
 var saveModel = require("../models/saveModel");
 var desafioModel = require("../models/desafioModel");
 var objetivoModel = require("../models/objetivoModel");
+var regraModel = require("../models/regraModel");
 
 function listar(req, res) {
   saveModel.listar().then(function (resultado) {
@@ -49,11 +50,22 @@ function cadastrar(req, res) {
             console.log('Objetivos cadastrados');
             // res.status(200).send("Desafio e save criados com sucesso");
           })
-      } 
-
+      };
+      
+      if (nomeDesafio == 'viuva negra') {
+        regraModel.cadastrarViuvaNegra().then(
+          function (resultadoObjetivo) {
+            console.log('Regras cadastrados');
+            // res.status(200).send("Desafio e save criados com sucesso");
+          })
+      } else {
+        regraModel.cadastrar7BBs().then(
+          function (resultadoObjetivo) {
+            console.log('Regras cadastrados');
+            // res.status(200).send("Desafio e save criados com sucesso");
+          })
+      }
       // res.status(200).send("Desafio e save criados com sucesso");
-    }).catch(function (erro) {
-      res.status(500).json(erro.sqlMessage);
     })
 
   saveModel.buscarSavesPorUsuario(idUsuario)

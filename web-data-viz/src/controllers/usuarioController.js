@@ -31,8 +31,7 @@ function autenticar(req, res) {
 
                         saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
                             .then((resultadoSaves) => {
-                                if (resultadoSaves.length > 0) {
-
+                               
                                     desafioModel.buscarDesafiosPorUsuario(resultadoAutenticar[0].idUsuario)
                                         .then((resultadoDesafios) => {
                                             res.json({
@@ -46,14 +45,7 @@ function autenticar(req, res) {
                                         })
                                     // console.log(resultadoSaves);
                                     // console.log(resultadoSaves.saves);
-                                } else {
-                                    res.json({
-                                        idUsuario: resultadoAutenticar[0].idUsuario,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                    });
-                                }
+
                             })
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
