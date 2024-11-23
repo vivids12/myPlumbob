@@ -73,7 +73,6 @@
                 console.log("Deu bom")
                 console.log(resposta);
                 
-                
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
@@ -82,10 +81,11 @@
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.SAVES = JSON.stringify(json.saves);
                     sessionStorage.DESAFIOS = JSON.stringify(json.desafios);
+                    sessionStorage.OBJETIVOS = JSON.stringify(json.objetivos);
                     // sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
                     
                     setTimeout(function () {
-                        window.location = "./home.html";
+                        window.location = "./dashboard/home.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

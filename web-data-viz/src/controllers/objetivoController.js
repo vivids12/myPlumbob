@@ -26,10 +26,22 @@ function cadastrar(req, res) {
     })
 }
 
-function buscarObjetivosPorDesafio(req, res) {
-    var idDesafio = req.params.idDesafio;
+function cadastrarViuvaNegra(req, res) {
+  if (nome == undefined) {
+      res.status(400).send("Seu nome está undefined!");
+  }
+
+  objetivoModel.cadastrarViuvaNegra().then(function(resposta){
+      res.status(200).send("Objetivos cadastrados com sucesso");
+  }).catch(function(erro){
+      res.status(500).json(erro.sqlMessage);
+  })
+}
+
+function buscarObjetivosPorSave(req, res) {
+    var idSave = req.params.idSave;
   
-    objetivoModel.buscarObjetivosPorDesafio(idDesafio).then((resultado) => {
+    objetivoModel.buscarObjetivosPorSave(idSave).then((resultado) => {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
       } else {
@@ -37,7 +49,7 @@ function buscarObjetivosPorDesafio(req, res) {
       }
     }).catch(function (erro) {
       console.log(erro);
-      console.log("Houve um erro ao buscar os desafios: ", erro.sqlMessage);
+      console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
       res.status(500).json(erro.sqlMessage);
     });
   }
@@ -45,5 +57,6 @@ function buscarObjetivosPorDesafio(req, res) {
 module.exports = {
     listar,
     cadastrar,
-    buscarObjetivosPorDesafio
+    cadastrarViuvaNegra,
+    buscarObjetivosPorSave
 }

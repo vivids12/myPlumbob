@@ -13,8 +13,12 @@ router.get("/listar", function (req, res) {
     objetivoController.listar(req, res);
 });
 
-router.get("/buscarObjetivosPorDesafio", function (req, res) {
-    objetivoController.buscarObjetivosPorDesafio(req, res);
+router.get("/cadastrarViuvaNegra", function (req, res){
+    objetivoController.cadastrarViuvaNegra(req,res);
+})
+
+router.get("/buscarObjetivosPorSave", function (req, res) {
+    objetivoController.buscarObjetivosPorSave(req, res);
   });
 
 module.exports = router;

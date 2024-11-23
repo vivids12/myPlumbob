@@ -18,7 +18,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" sizes="16x16 32x32 64x64" href="css/home.css">
+    <link rel="stylesheet" sizes="16x16 32x32 64x64" href="../css/home.css">
 </head>
 <!-- , exibirSaves() -->
 
@@ -36,36 +36,9 @@
         <h2>Sul sul, <span id="b_usuario">usuario</span></h2>
         <h3>Id do usuario: <span id="idUser"></span></h3>
 
+        <p id="pCadastro" style="display: none; margin: 1vh;"></p>
         <div id="divSave">
-            <!-- <div id="save1" class="save semSave">
-                <h4 id="nome1">Nome do save</h4>
-                <span>
-                    <img src="../img/svg/saveSD.svg" alt="Sem desafio">
-                    <p>Nenhum desafio relacionado</p>
-                </span>
-                <p>Data de criação: <span id="dtSave1">01/01/2024</span></p>
-                <p>Descrição do save</p>
-            </div>
-
-            <div id="save2" class="save viuvaNegra">
-                <h4 id="nome2">Nome do save</h4>
-                <span>
-                    <img src="../img/svg/saveVN.svg" alt="Sem desafio">
-                    <p>Nenhum desafio relacionado</p>
-                </span>
-                <p>Data de criação: <span id="dtSave2">01/01/2024</span></p>
-                <p>Descrição do save</p>
-            </div>
-
-            <div id="save3" class="save bebes">
-                <h4 id="nome3">Nome do save</h4>
-                <span>
-                    <img src="../img/svg/saveBB.svg" alt="Sem desafio">
-                    <p>Nenhum desafio relacionado</p>
-                </span>
-                <p>Data de criação: <span id="dtSave3">01/01/2024</span></p>
-                <p>Descrição do save</p>
-            </div> -->
+            
         </div>
         <span class="btAddSave" onclick="clickSave()">
             Adicionar novo save
@@ -104,11 +77,11 @@
                     </p>
                 </div>
                 <!-- <button onclick="cadastroDesafio()">Cadastrar</button> -->
-                <button onclick="cadastroSave(),cadastroDesafio()">Adicionar desafio</button>
+                <button onclick="cadastroSave()">Adicionar save</button>
             </span>
         </div>
     </div>
-    <div id="divSave"></div>
+    <!-- <div id="divSave"></div> -->
     <div id="divDesafio"></div>
 
     <p>Cadastrar objetivo</p>
@@ -126,7 +99,6 @@
     </p>
     <hr>
     <button onclick="limparSessao()">Sair</button>
-    <!-- <p id="btnAquario"></p> -->
     <div class="cards" id="cardAquarios">
     </div>
 </body>
@@ -166,40 +138,34 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
                 nome: nomeVar,
                 dtCriacao: dtCriacaoVar,
                 desc: descVar,
                 idUsuario: idUsuario,
                 nomeDesafio: desafio,
-                // emailServer: emailVar,
-                // senhaServer: senhaVar
             }),
         })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
                 if (resposta.ok) {
-                    //   spanErro.style.display = "block";
-
-                    divSave.innerHTML =
+                    pCadastro.style.display = "flex";
+                    pCadastro.innerHTML =
                         "Cadastro realizado com sucesso!";
-                    //   spanErro.style.color = '#30B945';
 
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.SAVES = JSON.stringify(json.saves);
+                        sessionStorage.DESAFIOS = JSON.stringify(json.desafios);
+                    });
 
-                    //   setTimeout(() => {
-                    //     window.location = "login.html";
-                    //   }, "1000");
-
-                    limparFormulario();
-                    // finalizarAguardar();
+                    exibirSaves();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
             })
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
-                // finalizarAguardar();
             });
 
         return false;
@@ -212,36 +178,18 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
                 nome: desafio,
-                // dtCriacao: dtCriacaoVar,
-                // desc: descVar,
                 idUsuario: idUsuario,
-                // emailServer: emailVar,
-                // senhaServer: senhaVar
             }), 
         }) 
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
                 
-                if (resposta.ok) {
-                    //   spanErro.style.display = "block";
-                    
+                if (resposta.ok) {                    
                     divDesafio.innerHTML =
                         "Cadastro realizado com sucesso!";
                     //   spanErro.style.color = '#30B945';
-
-
-                    //   setTimeout(() => {
-                    //     window.location = "login.html";
-                    //   }, "1000");
-
                     limparFormulario();
-
-
-                    fetch
-                    // finalizarAguardar();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -254,122 +202,56 @@
         return false;
     }
 
-    function cadastroDesafio(){
-        var desafio = '';
-        if (desafio7BB.checked){
-            desafio = '7bbs';
-        } else {
-            desafio = 'viuva negra';
-        }
+    // function cadastroObjetivo(){
+    //     var descVar = inpDescObj.value;
+    //     var pesoVar = slcPeso.value;
+    //     var idDesafio = sessionStorage.ID_DESAFIO;
 
-        fetch("/desafios/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                nome: desafio,
-                // dtCriacao: dtCriacaoVar,
-                // desc: descVar,
-                idUsuario: idUsuario,
-                // emailServer: emailVar,
-                // senhaServer: senhaVar
-            }), 
-        }) 
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
+    //     fetch("/objetivos/cadastrar", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             desc: descVar,
+    //             peso: pesoVar,
+    //             idDesafio: idDesafio,
+    //             idUsuario: idUsuario
+    //         }), 
+    //     }) 
+    //         .then(function (resposta) {
+    //             console.log("resposta: ", resposta);
                 
-                if (resposta.ok) {
-                    //   spanErro.style.display = "block";
-                    
-                    divDesafio.innerHTML =
-                        "Cadastro realizado com sucesso!";
-                    //   spanErro.style.color = '#30B945';
+    //             if (resposta.ok) {
+    //                 divObjetivo.innerHTML =
+    //                     "Cadastro realizado com sucesso!";
+    //                 //   spanErro.style.color = '#30B945';
+    //                 limparFormulario();
+    //             } else {
+    //                 throw "Houve um erro ao tentar realizar o cadastro!";
+    //             }
+    //         })
+    //         .catch(function (resposta) {
+    //             console.log(`#ERRO: ${resposta}`);
+    //         });
 
-
-                    //   setTimeout(() => {
-                    //     window.location = "login.html";
-                    //   }, "1000");
-
-                    limparFormulario();
-
-
-                    fetch
-                    // finalizarAguardar();
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-                // finalizarAguardar();
-            });
-
-        return false;
-    }
-
-    function cadastroObjetivo(){
-        var descVar = inpDescObj.value;
-        var pesoVar = slcPeso.value;
-        var idDesafio = sessionStorage.ID_DESAFIO;
-
-        fetch("/objetivos/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                desc: descVar,
-                peso: pesoVar,
-                idDesafio: idDesafio,
-                idUsuario: idUsuario
-            }), 
-        }) 
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-                
-                if (resposta.ok) {
-                    //   spanErro.style.display = "block";
-                    
-                    divObjetivo.innerHTML =
-                        "Cadastro realizado com sucesso!";
-                    //   spanErro.style.color = '#30B945';
-
-
-                    //   setTimeout(() => {
-                    //     window.location = "login.html";
-                    //   }, "1000");
-
-                    limparFormulario();
-                    // finalizarAguardar();
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-                // finalizarAguardar();
-            });
-
-        return false;
-    }
+    //     return false;
+    // }
 
 function exibirSaves() {
     JSON.parse(sessionStorage.SAVES).forEach(item => {
 
         document.getElementById("divSave").innerHTML += `
-            <div id="save${item.idSave}" class="save">
-                <h4 id="nome${item.idSave}">${item.nome}</h4>
-                <span id="spanDesafio${item.idSave}">
-                </span>
-                <p>Data de criação: <span id="dtSave${item.idSave}">${item.dtCriacao}</span></p>
-                <p>${item.descricao}</p>
-            </div>
-            `;
+            <a href="dashboard.html" class="linkSaves">
+                <div id="save${item.idSave}" class="save">
+                    <h4 id="nome${item.idSave}">${item.nome}</h4>
+                    <span id="spanDesafio${item.idSave}">
+                    </span>
+                    <p>Data de criação: <span id="dtSave${item.idSave}">${item.dtCriacao}</span></p>
+                    <p>${item.descricao}</p>
+                </div>
+            </a>
+        `;
     });
 
     var contador = 0;
@@ -378,52 +260,27 @@ function exibirSaves() {
         var indice = JSON.parse(sessionStorage.SAVES)[contador].idSave;
 
         var spanDesafio = document.getElementById('spanDesafio' + indice);
+        var save = document.getElementById('save' + indice);
 
         if (item.nome == 'Desafio dos 7 bebês'){
             var img = 'saveBB';
+            var classe = 'bebes';
         } else {
             var img = 'saveVN';
+            var classe = 'viuvaNegra';
         }
         
         var desafio = `
-            <img src="img/svg/${img}.svg" alt="Sem desafio">
+            <img src="../img/svg/${img}.svg" alt="Sem desafio">
             <p>${item.nome}</p>
         `;
+
+        save.classList.remove(classe);
+        save.classList.add(classe);
 
         spanDesafio.innerHTML += desafio;
             
         contador++;
     });
 }
-
-    // window.onload = exibirSavesDoUsuario();
-
-    // function exibirSavesDoUsuario() {
-    //     var saves = JSON.parse(sessionStorage.SAVES);
-    //     saves.forEach(item => {
-    //         document.getElementById("btnAquario").innerHTML += `
-    //         <button class="btn-chart" onclick="exibirSaves(${item.idSave})" id="btnAquario${item.idSave}">${item.descricao}</button>
-    //         `
-
-    //         document.getElementById("graficos").innerHTML += `
-    //             <div id="grafico${item.idSave}" class="display-none">
-    //                 <h3 class="tituloGraficos">
-    //                     <span id="tituloAquario${item.idSave}">${item.descricao}</span>
-    //                 </h3>
-    //                 <div class="graph">
-    //                     <canvas id="myChartCanvas${item.idSave}"></canvas>
-    //                 </div>
-    //                 <div class="label-captura">
-    //                     <p id="avisoCaptura${item.idSave}" style="color: white"></p>
-    //                 </div>
-    //             </div>
-    //         `
-
-    //         obterDadosGrafico(item.idSave)
-    //     });
-
-    //     if (saves.length > 0) {
-    //         exibirAquario(aquarios[0].id)
-    //     }
-    // }
 </script>

@@ -119,6 +119,17 @@ header {
     border: 6px solid #F2F2F2;
 }
 
+.linkSaves{
+    text-decoration: none;
+    width: fit-content;
+
+    transition: ease-in-out 0.2s;
+}
+
+.linkSaves:hover, .linkSaves:focus{
+    transform: scale(0.95);
+}
+
 .save {
     width: 18vw;
     height: 100%;
