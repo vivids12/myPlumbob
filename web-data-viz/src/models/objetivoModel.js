@@ -49,9 +49,32 @@ function cadastrarViuvaNegra() {
     return database.executar(instrucao);
 }
 
+function cadastrar7BBs(){
+    var selectSave = `
+    SELECT idDesafio FROM desafio ORDER BY idDesafio DESC LIMIT 1
+    `;
+
+    var instrucao = `
+    INSERT INTO objetivos(fkDesafio, progresso, descricao, peso) VALUES 
+    ((${selectSave}), FALSE, 'É necessário criar pelo menos 4 dos 7 filhos', 1),
+    ((${selectSave}), FALSE, 'Quando bebê, atingir o nível 5 na habilidade de movimento', 1),
+    ((${selectSave}), FALSE, 'Quando bebê, atingir o nível 5 na habilidade de comunicação', 2),
+    ((${selectSave}), FALSE, 'Quando bebê, atingir o nível 5 na habilidade de troninho', 2),
+    ((${selectSave}), FALSE, 'Quando criança, atingir nota 10 na escola', 2),
+    ((${selectSave}), FALSE, 'Quando criança, completar a aspiração', 3),
+    ((${selectSave}), FALSE, 'Quando criança, atinjir nível 5 em alguma habilidade', 1),
+    ((${selectSave}), FALSE, 'Quando adolescente, alcançar a nota 10 da escola', 2),
+    ((${selectSave}), FALSE, 'Quando adolescente, atinjir nível 10 em alguma habilidade', 3),
+    ((${selectSave}), FALSE, 'Todos os filhos atingirem a idade jovem adulta', 3);`;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     cadastrar,
     listar,
     buscarObjetivosPorSave,
-    cadastrarViuvaNegra
+    cadastrarViuvaNegra,
+    cadastrar7BBs
 };

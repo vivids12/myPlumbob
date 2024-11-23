@@ -139,20 +139,35 @@ header {
     border-radius: 1vh;
     font-size: 2.3vh;
     /* text-align: center; */
+    display: flex;
+    flex-direction: column;
 
     -webkit-box-shadow: 5px 10px 50px -35px rgba(92,92,92,1);
     -moz-box-shadow: 5px 10px 50px -35px rgba(92,92,92,1);
     box-shadow: 5px 10px 50px -35px rgba(92,92,92,1);
 }
 
+.save span{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.save h4{
+    margin: 0;
+    font-size: large;
+}
+
 .save p{
     width: 100%;
-    margin: 1.2vh;
+    margin: 1vh 0;
+    display: flex;
 }
 
 .save img{
     height: 8vw;
     margin: 1.5vh 0;
+    align-self: center;
 }
 
 .semSave {

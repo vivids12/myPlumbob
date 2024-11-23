@@ -36,22 +36,25 @@ function cadastrar(req, res) {
 
   desafioModel.cadastrar(nomeDesafio, idUsuario).then(
     function (resultadoDesafio) {
+      console.log('Desafio cadastrado');
+      if (nomeDesafio == 'viuva negra') {
+        objetivoModel.cadastrarViuvaNegra().then(
+          function (resultadoObjetivo) {
+            console.log('Objetivos cadastrados');
+            // res.status(200).send("Desafio e save criados com sucesso");
+          })
+      } else {
+        objetivoModel.cadastrar7BBs().then(
+          function (resultadoObjetivo) {
+            console.log('Objetivos cadastrados');
+            // res.status(200).send("Desafio e save criados com sucesso");
+          })
+      } 
+
       // res.status(200).send("Desafio e save criados com sucesso");
     }).catch(function (erro) {
       res.status(500).json(erro.sqlMessage);
     })
-
-  if (nomeDesafio == 'viuva negra') {
-    objetivoModel.cadastrarViuvaNegra().then(
-      function (resultadoObjetivo) {
-        // res.status(200).send("Desafio e save criados com sucesso");
-      }).catch(function (erro) {
-        // res.status(500).json(erro.sqlMessage);
-      })
-  }
-  // else if (nomeDesafio == '7bbd'){
-
-  // } 
 
   saveModel.buscarSavesPorUsuario(idUsuario)
     .then((resultadoSaves) => {

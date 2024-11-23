@@ -15,6 +15,10 @@ router.get("/listar", function (req, res) {
 
 router.get("/cadastrarViuvaNegra", function (req, res){
     objetivoController.cadastrarViuvaNegra(req,res);
+});
+
+router.get("/cadastrar7BBs", function (req, res){
+    objetivoController.cadastrar7BBs(req,res);
 })
 
 router.get("/buscarObjetivosPorSave", function (req, res) {

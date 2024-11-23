@@ -49,7 +49,7 @@
                 <h3>Adicionar novo save</h3>
                 <p>Nome</p>
                 <input type="text" placeholder="Nome" id="inpNomeSave">
-                <p>Data de criação</p> 
+                <p>Data de criação</p>
                 <input type="date" id="inpDtCriacao">
                 <p>Descrição</p>
                 <textarea id="txtSave" placeholder="Descrição"></textarea>
@@ -76,39 +76,18 @@
                         <label for="semDesafio">Ficar sem desafio</label>
                     </p>
                 </div>
-                <!-- <button onclick="cadastroDesafio()">Cadastrar</button> -->
                 <button onclick="cadastroSave()">Adicionar save</button>
             </span>
         </div>
-    </div>
-    <!-- <div id="divSave"></div> -->
-    <div id="divDesafio"></div>
-
-    <p>Cadastrar objetivo</p>
-    <p>
-        Descrição: <br>
-        <input type="text" placeholder="Descrição" id="inpDescObj"> <br>
-        <select id="slcPeso">
-            <!-- <option value="#">Selecione uma opção</option> -->
-            <option value="1">Fácil</option>
-            <option value="2">Médio</option>
-            <option value="3">Difícil</option>
-        </select> <br>
-        <button onclick="cadastroObjetivo()">Cadastrar</button>
-    <div id="divObjetivo"></div>
-    </p>
-    <hr>
-    <button onclick="limparSessao()">Sair</button>
-    <div class="cards" id="cardAquarios">
     </div>
 </body>
 
 </html>
 <script>
     addSave.style.display = 'none';
-    function clickSave(){
+    function clickSave() {
 
-        if(addSave.style.display == 'none'){
+        if (addSave.style.display == 'none') {
             addSave.style.display = 'grid';
         } else {
             addSave.style.display = 'none';
@@ -119,14 +98,14 @@
     // var idUsuario = sessionStorage.ID_USUARIO;
     idUser.innerHTML = sessionStorage.ID_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
-    
+
     function cadastroSave() {
         var nomeVar = inpNomeSave.value;
         var dtCriacaoVar = inpDtCriacao.value;
         var descVar = txtSave.value;
 
         var desafio = '';
-        if (desafio7BB.checked){
+        if (desafio7BB.checked) {
             desafio = '7bbs';
         } else {
             desafio = 'viuva negra';
@@ -171,7 +150,7 @@
         return false;
     }
 
-    function savesPorUsuario(){
+    function savesPorUsuario() {
         fetch("/saves/buscarSavesPorUsuario", {
             method: "POST",
             headers: {
@@ -180,12 +159,12 @@
             body: JSON.stringify({
                 nome: desafio,
                 idUsuario: idUsuario,
-            }), 
-        }) 
+            }),
+        })
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
-                
-                if (resposta.ok) {                    
+
+                if (resposta.ok) {
                     divDesafio.innerHTML =
                         "Cadastro realizado com sucesso!";
                     //   spanErro.style.color = '#30B945';
@@ -221,7 +200,7 @@
     //     }) 
     //         .then(function (resposta) {
     //             console.log("resposta: ", resposta);
-                
+
     //             if (resposta.ok) {
     //                 divObjetivo.innerHTML =
     //                     "Cadastro realizado com sucesso!";
@@ -238,49 +217,50 @@
     //     return false;
     // }
 
-function exibirSaves() {
-    JSON.parse(sessionStorage.SAVES).forEach(item => {
+    function exibirSaves() {
+        divSave.innerHTML = '';
+        JSON.parse(sessionStorage.SAVES).forEach(item => {
 
-        document.getElementById("divSave").innerHTML += `
+            document.getElementById("divSave").innerHTML += `
             <a href="dashboard.html" class="linkSaves">
                 <div id="save${item.idSave}" class="save">
                     <h4 id="nome${item.idSave}">${item.nome}</h4>
                     <span id="spanDesafio${item.idSave}">
                     </span>
-                    <p>Data de criação: <span id="dtSave${item.idSave}">${item.dtCriacao}</span></p>
+                    <p>Data de criação: ${item.dtCriacao}</p>
                     <p>${item.descricao}</p>
                 </div>
             </a>
         `;
-    });
+        });
 
-    var contador = 0;
+        var contador = 0;
 
-    JSON.parse(sessionStorage.DESAFIOS).forEach(item => {
-        var indice = JSON.parse(sessionStorage.SAVES)[contador].idSave;
+        JSON.parse(sessionStorage.DESAFIOS).forEach(item => {
+            var indice = JSON.parse(sessionStorage.SAVES)[contador].idSave;
 
-        var spanDesafio = document.getElementById('spanDesafio' + indice);
-        var save = document.getElementById('save' + indice);
+            var spanDesafio = document.getElementById('spanDesafio' + indice);
+            var save = document.getElementById('save' + indice);
 
-        if (item.nome == 'Desafio dos 7 bebês'){
-            var img = 'saveBB';
-            var classe = 'bebes';
-        } else {
-            var img = 'saveVN';
-            var classe = 'viuvaNegra';
-        }
-        
-        var desafio = `
+            if (item.nome == 'Desafio dos 7 bebês') {
+                var img = 'saveBB';
+                var classe = 'bebes';
+            } else {
+                var img = 'saveVN';
+                var classe = 'viuvaNegra';
+            }
+
+            var desafio = `
             <img src="../img/svg/${img}.svg" alt="Sem desafio">
             <p>${item.nome}</p>
         `;
 
-        save.classList.remove(classe);
-        save.classList.add(classe);
+            save.classList.remove(classe);
+            save.classList.add(classe);
 
-        spanDesafio.innerHTML += desafio;
-            
-        contador++;
-    });
-}
+            spanDesafio.innerHTML += desafio;
+
+            contador++;
+        });
+    }
 </script>

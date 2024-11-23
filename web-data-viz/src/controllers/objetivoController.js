@@ -27,11 +27,15 @@ function cadastrar(req, res) {
 }
 
 function cadastrarViuvaNegra(req, res) {
-  if (nome == undefined) {
-      res.status(400).send("Seu nome está undefined!");
-  }
-
   objetivoModel.cadastrarViuvaNegra().then(function(resposta){
+      res.status(200).send("Objetivos cadastrados com sucesso");
+  }).catch(function(erro){
+      res.status(500).json(erro.sqlMessage);
+  })
+}
+
+function cadastrar7BBs(req, res) {
+  objetivoModel.cadastrar7BBs().then(function(resposta){
       res.status(200).send("Objetivos cadastrados com sucesso");
   }).catch(function(erro){
       res.status(500).json(erro.sqlMessage);
@@ -58,5 +62,6 @@ module.exports = {
     listar,
     cadastrar,
     cadastrarViuvaNegra,
+    cadastrar7BBs,
     buscarObjetivosPorSave
 }
