@@ -10,17 +10,13 @@ function listar(req, res) {
 }
 
 function cadastrar(req, res) {
-    var descricao = req.body.desc;
+    var descricao = req.body.descricao;
     var peso = req.body.peso;
     var idDesafio = req.body.idDesafio;
-    var idUsuario = req.body.idUsuario;
 
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    }
-
-    objetivoModel.cadastrar(descricao, peso, idDesafio, idUsuario).then(function(resposta){
-        res.status(200).send("Desafio criado com sucesso");
+    objetivoModel.cadastrar(descricao, peso, idDesafio).then(
+      function(resposta){
+        res.status(200).send("Objetivo cadastrado com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     })

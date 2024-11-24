@@ -126,6 +126,26 @@ section h3{
 .mensagens{
     display: none;
     color: #29AF3F;
+    /* color: #ce1010; */
+}
+
+.spanAddObj{
+    display: flex;
+    flex-direction: row;
+    gap: 1vh;
+}
+
+select{
+    border: #4276B7 1px solid;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    color: #052937;
+    font-weight: 700;
+}
+
+select option{
+    color: #666666;
+    font-weight: 700;
 }
 
 #imgDesafio {
@@ -201,7 +221,7 @@ section p{
 
 textarea{
     width: 100%;
-    height: 33.5vh;
+    height: 73%;
     color: #666666;
     background-color: #ffffff;
     font-size: 2vh;

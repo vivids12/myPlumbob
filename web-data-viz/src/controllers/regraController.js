@@ -1,26 +1,11 @@
 var regraModel = require("../models/regraModel");
 
-function listar(req, res) {
-    objetivoModel.listar().then(function(resultado){
-        // precisamos informar que o resultado voltará para o front-end como uma resposta em json
-        res.status(200).json(resultado);
-    }).catch(function(erro){
-        res.status(500).json(erro.sqlMessage);
-    })
-}
-
 function cadastrar(req, res) {
-    var descricao = req.body.desc;
-    var peso = req.body.peso;
+    var descricao = req.body.descricao;
     var idDesafio = req.body.idDesafio;
-    var idUsuario = req.body.idUsuario;
 
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    }
-
-    objetivoModel.cadastrar(descricao, peso, idDesafio, idUsuario).then(function(resposta){
-        res.status(200).send("Desafio criado com sucesso");
+    regraModel.cadastrar(descricao, idDesafio).then(function(resposta){
+        res.status(200).send("Regra adicionada com sucesso");
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     })
@@ -59,7 +44,6 @@ function buscarRegrasPorSave(req, res) {
   }
 
 module.exports = {
-    listar,
     cadastrar,
     cadastrarViuvaNegra,
     cadastrar7BBs,

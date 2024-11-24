@@ -1,28 +1,19 @@
 var database = require("../database/config");
 
-function listar() {
+function cadastrar(descricao, idDesafio) {
     var instrucao = `
-        SELECT * FROM objetivos;
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
-function cadastrar(descricao, peso, idDesafio) {
-    var instrucao = `
-    INSERT INTO objetivos (fkDesafio, progresso, descricao, peso) VALUES ('${idDesafio}', false, ${descricao}, ${peso})`;
+    INSERT INTO regras (fkDesafio, descricao) VALUES (${idDesafio}, '${descricao}')`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
 function buscarRegrasPorSave(idDesafio) {
-
     var instrucaoSql = `SELECT descricao FROM regras WHERE fkDesafio = ${idDesafio}`;
-  
+
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-  }
+}
 
 function cadastrarViuvaNegra() {
     var selectSave = `
@@ -53,7 +44,7 @@ function cadastrarViuvaNegra() {
     return database.executar(instrucao);
 }
 
-function cadastrar7BBs(){
+function cadastrar7BBs() {
     var selectSave = `
     SELECT idDesafio FROM desafio ORDER BY idDesafio DESC LIMIT 1
     `;
@@ -76,7 +67,6 @@ function cadastrar7BBs(){
 
 module.exports = {
     cadastrar,
-    listar,
     buscarRegrasPorSave,
     cadastrarViuvaNegra,
     cadastrar7BBs

@@ -8,11 +8,6 @@ router.post("/cadastrar", function (req, res) {
     objetivoController.cadastrar(req, res);
 });
 
-router.get("/listar", function (req, res) {
-    // função a ser chamada quando acessar /objetivos/listar
-    objetivoController.listar(req, res);
-});
-
 router.post("/cadastrarViuvaNegra", function (req, res){
     objetivoController.cadastrarViuvaNegra(req,res);
 });

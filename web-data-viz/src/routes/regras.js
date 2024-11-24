@@ -8,11 +8,6 @@ router.post("/cadastrar", function (req, res) {
     regraController.cadastrar(req, res);
 });
 
-router.get("/listar", function (req, res) {
-    // função a ser chamada quando acessar /regras/listar
-    regraController.listar(req, res);
-});
-
 router.get("/cadastrarViuvaNegra", function (req, res){
     regraController.cadastrarViuvaNegra(req,res);
 });

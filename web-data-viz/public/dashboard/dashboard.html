@@ -45,9 +45,9 @@
             </span>
             <div class="addRegra">
               <label>Adicionar regra</label>
-              <input type="text" placeholder="Adicione uma regra">
-              
-              <button>Adicionar regra</button>
+              <input type="text" id="inpAddRegra" placeholder="Adicione uma regra">
+              <span id="pAddRegra" class="mensagens"></span>
+              <button onclick="adicionarRegra()">Adicionar regra</button>
               <p>*Adicione apenas uma regra por vez</p>
             </div>
           </div>
@@ -69,8 +69,17 @@
 
           <div class="baixoDir">
             <label>Adicionar objetivo</label>
-            <input type="text" placeholder="Adicone um objetivo">
-            <button>Adicionar objetivo</button>
+
+            <span class="spanAddObj">
+              <input type="text" id="inpAddObj" placeholder="Adicione um objetivo">
+              <select id="pesoObjetivo">
+                <option value="1">Fácil</option>
+                <option value="2">Médio</option>
+                <option value="3">Difícil</option>
+              </select>
+            </span>
+            <span id="pAddObj" class="mensagens"></span>
+            <button onclick="adicionarObjetivo()">Adicionar objetivo</button>
             <p>*Adicione apenas um objetivo por vez</p>
 
             <h3>Objetivos</h3>
@@ -163,6 +172,7 @@
   }
 
   function listarObjetivosPorSave() {
+    listaObjetivos.innerHTML='';
     JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
       if (item.progresso == 1) {
         document.getElementById("listaObjetivos").innerHTML += `
@@ -198,7 +208,12 @@
         })
           .then((resposta) => {
             if (resposta.ok) {
+              progressoAtualizar.style.display = 'flex';
               progressoAtualizar.innerHTML = `Progresso atualizado`;
+
+              setTimeout(() => {
+                progressoAtualizar.style.display = 'none';
+              }, 2000);
             } else {
               console.error("Erro na atualização");
             }
@@ -248,6 +263,11 @@
             if (resposta.ok) {
               descAtualizar.style.display = 'flex';
               descAtualizar.innerHTML = `Descrição atualizada`;
+
+              setTimeout(() => {
+                descAtualizar.style.display = 'none';
+              }, 2000);
+
               resposta.json().then(json => {
                   console.log(json);
                   console.log(JSON.stringify(json));
@@ -259,6 +279,102 @@
           }).catch(function (error) {
             console.error(`Erro ao atualizar descricao: ${error.message}`);
           });
+  }
+
+  function adicionarObjetivo(){
+    var peso = pesoObjetivo.value;
+    var descricao = inpAddObj.value;
+    var idDesafio = desafioAtual.idDesafio;
+
+    if (descricao == ''){
+      pAddObj.style.color = '#ce1010';
+      pAddObj.style.display = 'flex';
+      pAddObj.innerHTML = 'Preencha o campo para adicionar um objetivo';
+
+      setTimeout(() => {
+        pAddObj.style.display = 'none';
+      }, 2000);
+
+    } else {
+      fetch("/objetivos/cadastrar",{
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            peso: peso,
+            descricao: descricao,
+            idDesafio: idDesafio
+        }),
+      })
+      .then(function(resposta){
+        console.log('resposta: ', resposta);
+        if (resposta.ok){
+
+          pAddObj.style.color = '#29AF3F';
+          pAddObj.style.display = 'flex';
+          pAddObj.innerHTML = 'Objetivo adicionado com sucesso!';
+
+          setTimeout(() => {
+            pAddObj.style.display = 'none';
+          }, 2000);
+
+          buscarObjetivosPorSave();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      }).catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+      });
+      return false;
+    }
+  }
+
+  function adicionarRegra(){
+    var descricao = inpAddRegra.value;
+    var idDesafio = desafioAtual.idDesafio;
+
+    if (descricao == ''){
+      pAddRegra.style.color = '#ce1010';
+      pAddRegra.style.display = 'flex';
+      pAddRegra.innerHTML = 'Preencha o campo para adicionar uma regra';
+
+      setTimeout(() => {
+        pAddRegra.style.display = 'none';
+      }, 2000);
+
+    } else {
+      fetch("/regras/cadastrar",{
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            descricao: descricao,
+            idDesafio: idDesafio
+        }),
+      })
+      .then(function(resposta){
+        console.log('resposta: ', resposta);
+        if (resposta.ok){
+
+          pAddRegra.style.color = '#29AF3F';
+          pAddRegra.style.display = 'flex';
+          pAddRegra.innerHTML = 'Regra adicionada com sucesso!';
+
+          setTimeout(() => {
+            pAddRegra.style.display = 'none';
+          }, 2000);
+
+          buscarRegrasPorSave();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      }).catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+      });
+      return false;
+    }
   }
 
   // window.onload = exibirProgressoDoUsuario();

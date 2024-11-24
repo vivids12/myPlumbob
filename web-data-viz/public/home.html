@@ -282,29 +282,14 @@
                 console.log("resposta: ", resposta);
                 
                 if (resposta.ok) {
-                    //   spanErro.style.display = "block";
-                    
                     divDesafio.innerHTML =
                         "Cadastro realizado com sucesso!";
-                    //   spanErro.style.color = '#30B945';
-
-
-                    //   setTimeout(() => {
-                    //     window.location = "login.html";
-                    //   }, "1000");
-
-                    limparFormulario();
-
-
-                    fetch
-                    // finalizarAguardar();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
             })
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
-                // finalizarAguardar();
             });
 
         return false;
