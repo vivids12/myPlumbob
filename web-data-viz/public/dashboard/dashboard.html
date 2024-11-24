@@ -36,7 +36,7 @@
     </span>
   </header>
   <div id="corpo">
-    <h2 id="nomeSave">Nome save</h2>
+    <h1 id="nomeSave">Nome save</h1>
     <h3>Data de criação: <span id="dtCriacao"></span></h3>
 
     <div id="graficos">
@@ -47,27 +47,47 @@
       <div class="cima">
         <div class="cimaEsq" >
           <h3>Desafio</h3>
-          <span id="imgDesafio"></span>
+          <span id="imgDesafio">
 
-          <div>
+          </span>
+          <div class="addRegra">
             <label>Adicionar regra</label>
-            <input type="text" placeholder="Regra">
+            <input type="text" placeholder="Adicione uma regra">
             <button>Adicionar regra</button>
             <p>*Adicione apenas uma regra por vez</p>
           </div>
         </div>
 
         <div class="cimaDir">
-          <label>Descrição</label>
-          <textarea id="" placeholder="Descrição"></textarea>
+          <h3>Descrição</h3>
+          <textarea id="descSave" placeholder="Descrição"></textarea>
           <button>Atualizar descrição</button>
         </div>
       </div>
-      <div class="baixo"></div>
+      <div class="baixo">
+        <div class="baixoEsq">
+            <h3>Regras</h3>
+            <ul id="listaRegras">
+  
+            </ul>
+        </div>
+
+        <div class="baixoDir">
+          <label>Adicionar objetivo</label>
+          <input type="text" placeholder="Adicone um objetivo">
+          <button>Adicionar objetivo</button>
+          <p>*Adicione apenas um objetivo por vez</p>
+
+          <h3>Objetivos</h3>
+          <div id="listaObjetivos">
+
+          </div>
+        </div>
+      </div>
     </section>
 
     <span id="nomeDesafio"></span>
-    <span id="descSave"></span>
+    <!-- <span id="descSave"></span> -->
 
     <div id="divObj">
 
@@ -112,21 +132,29 @@
   // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   // idUser.innerHTML = sessionStorage.ID_USUARIO;
 
-  var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
-  var jsonSave = JSON.parse(sessionStorage.SAVES);
-  var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
-  var desafioAtual = 0;
-  var saveAtual = 0;
+    var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
+    var jsonSave = JSON.parse(sessionStorage.SAVES);
+    var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
+    var desafioAtual = 0;
+    var saveAtual = 0;
 
   window.onload = carregarDadosSave();
 
   function carregarDadosSave() {
+
     for (var i = 0; i < jsonDesafio.length; i++) {
       if (jsonDesafio[i].fkSave == idSaveAtual) {
-        desafioAtual = jsonDesafio[0];
-        saveAtual = jsonSave[0];
+        desafioAtual = jsonDesafio[i];
+        saveAtual = jsonSave[i];
       }
     }
+
+    if (desafioAtual.nome == 'Desafio dos 7 bebês'){
+      imgDesafio.innerHTML = `<img src='../img/svg/desafioBB.svg'>`;
+    } else if (desafioAtual.nome == 'Desafio da viúva negra'){
+      imgDesafio.innerHTML = `<img src='../img/svg/desafioVN.svg'>`;
+    }
+
     nomeSave.innerHTML = saveAtual.nome;
     dtCriacao.innerHTML = saveAtual.dtCriacao;
     nomeDesafio.innerHTML = desafioAtual.nome;
