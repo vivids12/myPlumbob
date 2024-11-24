@@ -89,7 +89,10 @@ function buscarSavesPorUsuario(req, res) {
 
   saveModel.buscarSavesPorUsuario(idUsuario).then((resultado) => {
     if (resultado.length > 0) {
-      res.status(200).json(resultado);
+      res.json({
+        saves: resultadoSaves,
+        desafios: resultadoDesafios
+      });
     } else {
       res.status(204).json([]);
     }
@@ -100,8 +103,29 @@ function buscarSavesPorUsuario(req, res) {
   });
 }
 
+function atualizarDescricao(req, res) {
+  var idSave = req.body.idSave;
+  var descricao = req.body.descricao;
+  var idUsuario = req.body.idUsuario;
+
+  saveModel.atualizarDescricao(idSave, descricao).then(
+    function(resultado) {
+      saveModel.buscarSavesPorUsuario(idUsuario).then(
+        function(resultadoSaves){
+          res.json({
+            saves: resultadoSaves,
+          });
+        }
+      )
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    })
+
+}
+
 module.exports = {
   listar,
   cadastrar,
-  buscarSavesPorUsuario
+  buscarSavesPorUsuario,
+  atualizarDescricao
 }

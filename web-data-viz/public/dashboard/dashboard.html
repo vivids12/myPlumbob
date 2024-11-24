@@ -1,122 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <link rel="shortcut icon" href="../img/icone.ico" type="image/x-icon" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyPlumbob | Progresso</title>
 
-<head>
-  <link rel="shortcut icon" href="../img/icone.ico" type="image/x-icon" />
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyPlumbob | Progresso</title>
+    <link rel="stylesheet" href="./../css/dashboard.css" />
+    <script src="../js/sessao.js"></script>
 
-  <link rel="stylesheet" href="./../css/dashboard.css" />
-  <!-- <link rel="stylesheet" href="./../css/home.css" /> -->
-  <script src="../js/sessao.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet" />
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- scripts do Chart.js - 2022-1 -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+  </head>
+  <body onload="validarSessao(), exibirProgressoDoUsuario()">
+    <header>
+      <img id="logo" src="../img/logoDark.png" alt="logo">
+      <span class="paginas">
+        <a href="home.html">Home</a>
+        <a href="desafios.html">Desafios</a>
+        <a onclick="limparSessao()">Sair</a>
+      </span>
+    </header>
+    <div id="corpo">
+      <h1 id="nomeSave">Nome save</h1>
+      <h3>Data de criação: <span id="dtCriacao"></span></h3>
 
-  <!--FONT AWESOME-->
-  <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
-</head>
+      <div id="graficos">
+        <canvas id="myCanvas"></canvas>
+      </div>
 
-<!-- <body onload=" atualizarFeed()"> -->
+      <section>
+        <div class="cima">
+          <div class="cimaEsq">
+            <h3>Desafio</h3>
+            <span id="imgDesafio">
 
-<body onload="validarSessao(), exibirProgressoDoUsuario()">
-  <header>
-    <img id="logo" src="../img/logoDark.png" alt="logo">
-    <span class="paginas">
-      <a href="home.html">Home</a>
-      <a href="desafios.html">Desafios</a>
-      <a onclick="limparSessao()">Sair</a>
-    </span>
-  </header>
-  <div id="corpo">
-    <h1 id="nomeSave">Nome save</h1>
-    <h3>Data de criação: <span id="dtCriacao"></span></h3>
+            </span>
+            <div class="addRegra">
+              <label>Adicionar regra</label>
+              <input type="text" placeholder="Adicione uma regra">
+              
+              <button>Adicionar regra</button>
+              <p>*Adicione apenas uma regra por vez</p>
+            </div>
+          </div>
 
-    <div id="graficos">
-      <canvas id="myCanvas"></canvas>
-    </div>
-
-    <section>
-      <div class="cima">
-        <div class="cimaEsq">
-          <h3>Desafio</h3>
-          <span id="imgDesafio">
-
-          </span>
-          <div class="addRegra">
-            <label>Adicionar regra</label>
-            <input type="text" placeholder="Adicione uma regra">
-            <button>Adicionar regra</button>
-            <p>*Adicione apenas uma regra por vez</p>
+          <div class="cimaDir">
+            <h3>Descrição</h3>
+            <textarea id="descSave" placeholder="Descrição"></textarea>
+            <span id="descAtualizar" class="mensagens"></span>
+            <button onclick="atualizarDescricao()">Atualizar descrição</button>
           </div>
         </div>
+        <div class="baixo">
+          <div class="baixoEsq">
+            <h3>Regras</h3>
+            <ul id="listaRegras">
 
-        <div class="cimaDir">
-          <h3>Descrição</h3>
-          <textarea id="descSave" placeholder="Descrição"></textarea>
-          <button>Atualizar descrição</button>
-        </div>
-      </div>
-      <div class="baixo">
-        <div class="baixoEsq">
-          <h3>Regras</h3>
-          <ul id="listaRegras">
+            </ul>
+          </div>
 
-          </ul>
-        </div>
+          <div class="baixoDir">
+            <label>Adicionar objetivo</label>
+            <input type="text" placeholder="Adicone um objetivo">
+            <button>Adicionar objetivo</button>
+            <p>*Adicione apenas um objetivo por vez</p>
 
-        <div class="baixoDir">
-          <label>Adicionar objetivo</label>
-          <input type="text" placeholder="Adicone um objetivo">
-          <button>Adicionar objetivo</button>
-          <p>*Adicione apenas um objetivo por vez</p>
-
-          <h3>Objetivos</h3>
+            <h3>Objetivos</h3>
             <div id="listaObjetivos">
-            
+
             </div>
+            <span id="progressoAtualizar" class="mensagens"></span>
             <button onclick="salvarProgresso()">Salvar progresso</button>
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <!-- <div class="btn-nav-white">
-          <a href="./cards.html">
-            <h3>Aquários</h3>
-          </a>
-        </div>
-
-        <div class="btn-nav">
-          <h3>Gráficos</h3>
-        </div>
-
-        <div class="btn-nav-white">
-          <a href="./mural.html">
-            <h3>Mural de Avisos</h3>
-          </a>
-        </div> -->
-
-  <div class="btns-dash" id="btnAquario">
-    <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-  </div>
-
-  </div>
-  </div>
-</body>
-
+      </section>
+    </div>
+  </body>
 </html>
 
 <script>
-  // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-  // idUser.innerHTML = sessionStorage.ID_USUARIO;
-
   var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
   var jsonSave = JSON.parse(sessionStorage.SAVES);
   var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
@@ -140,7 +110,7 @@
       imgDesafio.innerHTML = `<img src='../img/svg/desafioVN.svg'>`;
     }
 
-    descSave.innerHTML = desafioAtual.descricao;
+    descSave.innerHTML = saveAtual.descricao;
     nomeSave.innerHTML = saveAtual.nome;
     dtCriacao.innerHTML = saveAtual.dtCriacao;
   }
@@ -194,7 +164,7 @@
 
   function listarObjetivosPorSave() {
     JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
-      if (item.progresso == 1){
+      if (item.progresso == 1) {
         document.getElementById("listaObjetivos").innerHTML += `
           <span>
             <input type="checkbox" id="objetivo${item.idObj}" name="checkObj" value="${item.idObj}" checked>
@@ -209,16 +179,16 @@
           </span>
         `;
       }
-      
+
     });
   }
 
-  function salvarProgresso(){
+  function salvarProgresso() {
     var checkBoxes = document.querySelectorAll('input[name="checkObj"]');
     var idObj = 0;
 
-    for (var i = 0; i < checkBoxes.length; i++){
-      if (checkBoxes[i].checked){
+    for (var i = 0; i < checkBoxes.length; i++) {
+      if (checkBoxes[i].checked) {
         console.log('Id opção selecionada: ', checkBoxes[i].value);
 
         idObj = checkBoxes[i].value;
@@ -227,36 +197,71 @@
           method: 'POST',
         })
           .then((resposta) => {
-            if(resposta.ok){
-              console.log(`Objetivo atualizado`);
+            if (resposta.ok) {
+              progressoAtualizar.innerHTML = `Progresso atualizado`;
             } else {
               console.error("Erro na atualização");
             }
           }).catch(function (error) {
             console.error(`Erro ao atualizar progresso: ${error.message}`);
           });
-        } else {
-          console.log('Id opção não selecionada: ', checkBoxes[i].value);
+      } else {
+        console.log('Id opção não selecionada: ', checkBoxes[i].value);
 
-          idObj = checkBoxes[i].value;
+        idObj = checkBoxes[i].value;
 
-          fetch(`/objetivos/atualizarObjetivosNaoCumpridos/${idObj}`, {
-            method: 'POST',
-          })
-            .then((resposta) => {
-              if(resposta.ok){
-                console.log(`Objetivo atualizado`);
-              } else {
-                console.error("Erro na atualização");
-              }
-            }).catch(function (error) {
-              console.error(`Erro ao atualizar progresso: ${error.message}`);
-            });
-          }
-      }      
+        fetch(`/objetivos/atualizarObjetivosNaoCumpridos/${idObj}`, {
+          method: 'POST',
+        })
+          .then((resposta) => {
+            if (resposta.ok) {
+              progressoAtualizar.style.display = 'flex';
+              progressoAtualizar.innerHTML = `Progresso atualizado`;
+            } else {
+              console.error("Erro na atualização");
+            }
+          }).catch(function (error) {
+            console.error(`Erro ao atualizar progresso: ${error.message}`);
+          });
+      }
+    }
   }
-  // window.onload = exibirProgressoDoUsuario();
 
+  function atualizarDescricao() {
+    var descricao = descSave.value;
+    var idSave = idSaveAtual;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch('/saves/atualizarDescricao', {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idSave: idSave,
+            descricao: descricao,
+            idUsuario: idUsuario
+          })
+        })
+          .then(function (resposta){
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+              descAtualizar.style.display = 'flex';
+              descAtualizar.innerHTML = `Descrição atualizada`;
+              resposta.json().then(json => {
+                  console.log(json);
+                  console.log(JSON.stringify(json));
+                  sessionStorage.SAVES = JSON.stringify(json.saves);
+              }); 
+            } else {
+              console.error("Erro na atualização");
+            }
+          }).catch(function (error) {
+            console.error(`Erro ao atualizar descricao: ${error.message}`);
+          });
+  }
+
+  // window.onload = exibirProgressoDoUsuario();
   let proximaAtualizacao;
 
   function exibirProgressoDoUsuario() {

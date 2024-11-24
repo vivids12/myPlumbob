@@ -15,6 +15,10 @@ router.get("/listar", function (req, res) {
 
 router.get("/buscarSavesPorUsuario", function (req, res) {
     saveController.buscarSavesPorUsuario(req, res);
-  });
+});
+
+router.post("/atualizarDescricao", function (req, res) {
+    saveController.atualizarDescricao(req, res);
+});
 
 module.exports = router;

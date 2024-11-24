@@ -24,8 +24,18 @@ function cadastrar(nome, data, desc, idUsuario) {
     return database.executar(instrucao);
 }
 
+function atualizarDescricao(idSave, descricao){
+    var instrucaoSQL = `
+        UPDATE save SET descricao = '${descricao}' WHERE idSave = ${idSave};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSQL);
+    return database.executar(instrucaoSQL);
+}
+
 module.exports = {
     cadastrar,
     listar,
-    buscarSavesPorUsuario
+    buscarSavesPorUsuario,
+    atualizarDescricao
 };

@@ -123,6 +123,11 @@ section h3{
     width: 100% !important;
 }
 
+.mensagens{
+    display: none;
+    color: #29AF3F;
+}
+
 #imgDesafio {
     display: flex;
     justify-content: center;
