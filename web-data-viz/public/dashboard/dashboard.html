@@ -1,54 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <link
-      rel="shortcut icon"
-      href="../assets/icon/favicon2.ico"
-      type="image/x-icon"
-    />
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AquaTech | Dashboards</title>
 
-    <link rel="stylesheet" href="./../css/dashboards.css" />
-    <link rel="stylesheet" href="./../css/home.css" />
-    <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
+<head>
+  <link rel="shortcut icon" href="../img/icone.ico" type="image/x-icon" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyPlumbob | Progresso</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="stylesheet" href="./../css/dashboard.css" />
+  <!-- <link rel="stylesheet" href="./../css/home.css" /> -->
+  <script src="../js/sessao.js"></script>
 
-    <!-- scripts do Chart.js - 2022-1 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
 
-    <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
-  </head>
+  <!-- scripts do Chart.js - 2022-1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- <body onload=" atualizarFeed()"> -->
+  <!--FONT AWESOME-->
+  <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+</head>
 
-  <body onload="validarSessao()">
-    <header>
-        <img id="logo" src="../img/logoDark.png" alt="logo">
-        <span class="paginas">
-            <a href="home.html">Home</a>
-            <a href="desafios.html">Desafios</a>
-            <a onclick="limparSessao()">Sair</a>
-        </span>
-    </header>
-    <div id="corpo">
-        <h2>Sul sul, <span id="b_usuario">usuario</span></h2>
-        <h3>Id do usuario: <span id="idUser"></span></h3>
+<!-- <body onload=" atualizarFeed()"> -->
 
-        <span id="spanSave">
+<body onload="validarSessao(), exibirProgressoDoUsuario()">
+  <header>
+    <img id="logo" src="../img/logoDark.png" alt="logo">
+    <span class="paginas">
+      <a href="home.html">Home</a>
+      <a href="desafios.html">Desafios</a>
+      <a onclick="limparSessao()">Sair</a>
+    </span>
+  </header>
+  <div id="corpo">
+    <h2 id="nomeSave">Nome save</h2>
+    <h3>Data de criação: <span id="dtCriacao"></span></h3>
 
-        </span>
+    <div id="graficos">
+      <canvas id="myCanvas"></canvas>
     </div>
-        <!-- <div class="btn-nav-white">
+
+    <section>
+      <div class="cima">
+        <div class="cimaEsq" >
+          <h3>Desafio</h3>
+          <span id="imgDesafio"></span>
+
+          <div>
+            <label>Adicionar regra</label>
+            <input type="text" placeholder="Regra">
+            <button>Adicionar regra</button>
+            <p>*Adicione apenas uma regra por vez</p>
+          </div>
+        </div>
+
+        <div class="cimaDir">
+          <label>Descrição</label>
+          <textarea id="" placeholder="Descrição"></textarea>
+          <button>Atualizar descrição</button>
+        </div>
+      </div>
+      <div class="baixo"></div>
+    </section>
+
+    <span id="nomeDesafio"></span>
+    <span id="descSave"></span>
+
+    <div id="divObj">
+
+    </div>
+    <div id="divRegra">
+
+    </div>
+
+    <span id="spanSave">
+
+    </span>
+
+
+  </div>
+  <!-- <div class="btn-nav-white">
           <a href="./cards.html">
             <h3>Aquários</h3>
           </a>
@@ -64,51 +98,66 @@
           </a>
         </div> -->
 
-        <div class="btns-dash" id="btnAquario">
-          <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-        </div>
-        <div id="graficos"></div>
-      </div>
-    </div>
-  </body>
+  <div class="btns-dash" id="btnAquario">
+    <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
+  </div>
+
+  </div>
+  </div>
+</body>
+
 </html>
 
 <script>
-  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-  var idUsuario = sessionStorage.ID_USUARIO;
-  idUser.innerHTML = sessionStorage.ID_USUARIO;
+  // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  // idUser.innerHTML = sessionStorage.ID_USUARIO;
+
+  var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
+  var jsonSave = JSON.parse(sessionStorage.SAVES);
+  var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
+  var desafioAtual = 0;
+  var saveAtual = 0;
+
+  window.onload = carregarDadosSave();
+
+  function carregarDadosSave() {
+    for (var i = 0; i < jsonDesafio.length; i++) {
+      if (jsonDesafio[i].fkSave == idSaveAtual) {
+        desafioAtual = jsonDesafio[0];
+        saveAtual = jsonSave[0];
+      }
+    }
+    nomeSave.innerHTML = saveAtual.nome;
+    dtCriacao.innerHTML = saveAtual.dtCriacao;
+    nomeDesafio.innerHTML = desafioAtual.nome;
+    descSave.innerHTML = saveAtual.descricao;
+  }
+
+  // window.onload = exibirProgressoDoUsuario();
 
   let proximaAtualizacao;
 
-  window.onload = exibirAquariosDoUsuario();
-
-  function exibirAquariosDoUsuario() {
-    var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-    aquarios.forEach((item) => {
-      document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
-            `;
-
-      document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
+  function exibirProgressoDoUsuario() {
+    document.getElementById("graficos").innerHTML = `
+                <div id="grafico${desafioAtual.idDesafio}" class="display-none">
                     <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id}">${item.descricao}</span>
+                        <span id="tituloAquario${desafioAtual.idDesafio}">${desafioAtual.descricao}</span>
                     </h3>
                     <div class="graph">
-                        <canvas id="myChartCanvas${item.id}"></canvas>
+                        <canvas id="myChartCanvas${desafioAtual.idDesafio}"></canvas>
                     </div>
                     <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
+                        <p id="avisoCaptura${desafioAtual.idDesafio}" style="color: white"></p>
                     </div>
                 </div>
             `;
 
-      obterDadosGrafico(item.id);
-    });
+    obterDadosGrafico(desafioAtual.idDesafio);
 
-    if (aquarios.length > 0) {
-      exibirAquario(aquarios[0].id);
-    }
+
+    // if (aquarios.length > 0) {
+    // exibirAquario(desafioAtual.idDesafio);
+    // }
   }
 
   function alterarTitulo(idAquario) {
@@ -118,7 +167,7 @@
     ).nome;
     spanSave.innerHTML =
       "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" +
-        nome +
+      nome +
       "</span>";
   }
 
@@ -169,21 +218,21 @@
 
   //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
   //     Para ajustar o "select", ajuste o comando sql em src/models
-  function obterDadosGrafico(idAquario) {
-    alterarTitulo(idAquario);
+  function obterDadosGrafico(idDesafio) {
+    // alterarTitulo(idDesafio);
+    // if (proximaAtualizacao != undefined) {
+    //   clearTimeout(proximaAtualizacao);
+    // }
 
-    if (proximaAtualizacao != undefined) {
-      clearTimeout(proximaAtualizacao);
-    }
-
-    fetch(`/medidas/ultimas/${idAquario}`, { cache: "no-store" })
+    fetch(`/medidas/buscarProgresso/${idDesafio}`, { cache: "no-store" })
       .then(function (response) {
+        console.log('Entrei no fetch')
         if (response.ok) {
           response.json().then(function (resposta) {
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
             resposta.reverse();
 
-            plotarGrafico(resposta, idAquario);
+            plotarGrafico(resposta, idDesafio);
           });
         } else {
           console.error("Nenhum dado encontrado ou erro na API");
@@ -256,7 +305,7 @@
 
     // Adicionando gráfico criado em div na tela
     let myChart = new Chart(
-      document.getElementById(`myChartCanvas${idAquario}`),
+      document.getElementById(`graficos`),
       config
     );
 

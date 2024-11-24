@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap');
+
+.material-symbols-outlined {
+    font-size: 400px;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "League Spartan", sans-serif;
+}
+
+body {
+    /* /* display: flex;
+    /* flex-direction: column; */
+    /* align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw; */ 
+    padding: 0;
+    margin: 0 20vh;
+}
+
+header {
+    background-color: white;
+    width: 100%;
+    height: 7vh;
+
+    display: grid;
+    grid-template-columns: 10% 60% 30%;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    -webkit-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
+    box-shadow: -1px 9px 24px -14px rgba(0,0,0,0.75);
+}
+
+#logo{
+    height: 7vh;
+    justify-self: flex-end;
+}
+
+.paginas{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4vw;
+    margin-left: 5vh;
+
+    font-size: 3vh;
+    font-weight: 600;
+}
+
+.paginas a{
+    margin: 0;
+    text-decoration: none;
+    color: #052937;
+    cursor: pointer;
+}
+
+.paginas a:hover, .paginas a:focus{
+    color: #4276B7;
+}
+
+#corpo{
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+    color: #052937;
+}
+
+#corpo h2{
+    margin: 2vh 0;
+}
+
+section{
+    background-color: #F2F2F2;
+    border-radius: 1vh;
+    padding: 5vh;
+    color: #4276B7;
+    display: flex;
+    flex-direction: column;
+}
+
+.cima{
+    display: flex;
+    flex-direction: row;
+}
+
+.cima div{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}

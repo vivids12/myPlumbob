@@ -38,7 +38,8 @@
 
         <p id="pCadastro" style="display: none; margin: 1vh;"></p>
         <div id="divSave">
-            
+            <h3>Seus saves</h3>
+
         </div>
         <span class="btAddSave" onclick="clickSave()">
             Adicionar novo save
@@ -159,13 +160,17 @@
         }
     }
 
+    function mudarParaDashboard(idSave){
+        window.location = "dashboard.html";
+        sessionStorage.setItem('idSaveAtual', idSave)
+    }
+
     function exibirSaves() {
         divSave.style.display = 'flex';
         divSave.innerHTML = '';
         JSON.parse(sessionStorage.SAVES).forEach(item => {
-
             document.getElementById("divSave").innerHTML += `
-            <a href="dashboard.html" class="linkSaves">
+            <a onclick="mudarParaDashboard(${item.idSave})" class="linkSaves" style="cursor: pointer;">
                 <div id="save${item.idSave}" class="save">
                     <h4 id="nome${item.idSave}">${item.nome}</h4>
                     <span id="spanDesafio${item.idSave}">
@@ -194,9 +199,9 @@
             }
 
             var desafio = `
-            <img src="../img/svg/${img}.svg" alt="Sem desafio">
-            <p>${item.nome}</p>
-        `;
+                <img src="../img/svg/${img}.svg" alt="Sem desafio">
+                <p>${item.nome}</p>
+            `;
 
             save.classList.remove(classe);
             save.classList.add(classe);
