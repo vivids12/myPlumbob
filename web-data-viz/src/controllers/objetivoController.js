@@ -43,9 +43,9 @@ function cadastrar7BBs(req, res) {
 }
 
 function buscarObjetivosPorSave(req, res) {
-    var idSave = req.params.idSave;
+    var idDesafio = req.params.idDesafio;
   
-    objetivoModel.buscarObjetivosPorSave(idSave).then((resultado) => {
+    objetivoModel.buscarObjetivosPorSave(idDesafio).then((resultado) => {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
       } else {

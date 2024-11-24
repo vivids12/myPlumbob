@@ -21,7 +21,7 @@ router.get("/cadastrar7BBs", function (req, res){
     objetivoController.cadastrar7BBs(req,res);
 })
 
-router.get("/buscarObjetivosPorSave", function (req, res) {
+router.get("/buscarObjetivosPorSave/:idDesafio", function (req, res) {
     objetivoController.buscarObjetivosPorSave(req, res);
   });
 

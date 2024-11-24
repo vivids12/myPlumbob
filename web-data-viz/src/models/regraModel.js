@@ -8,14 +8,6 @@ function listar() {
     return database.executar(instrucao);
 }
 
-function buscarRegrasPorSave(idDesafio) {
-
-    var instrucaoSql = `SELECT nome FROM objetivos WHERE fkDesafio = ${idDesafio}`;
-  
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-  }
-
 function cadastrar(descricao, peso, idDesafio) {
     var instrucao = `
     INSERT INTO objetivos (fkDesafio, progresso, descricao, peso) VALUES ('${idDesafio}', false, ${descricao}, ${peso})`;
@@ -24,6 +16,13 @@ function cadastrar(descricao, peso, idDesafio) {
     return database.executar(instrucao);
 }
 
+function buscarRegrasPorSave(idDesafio) {
+
+    var instrucaoSql = `SELECT descricao FROM regras WHERE fkDesafio = ${idDesafio}`;
+  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+  }
 
 function cadastrarViuvaNegra() {
     var selectSave = `

@@ -32,6 +32,5 @@ function buscarMedidasEmTempoReal(idAquario) {
 module.exports = {
     buscarProgresso,
     buscarMaximo,
-    buscarUltimasMedidas,
     buscarMedidasEmTempoReal
 }

@@ -14,15 +14,15 @@ router.get("/listar", function (req, res) {
 });
 
 router.get("/cadastrarViuvaNegra", function (req, res){
-    objetivoController.cadastrarViuvaNegra(req,res);
+    regraController.cadastrarViuvaNegra(req,res);
 });
 
 router.get("/cadastrar7BBs", function (req, res){
-    objetivoController.cadastrar7BBs(req,res);
+    regraController.cadastrar7BBs(req,res);
 })
 
-router.get("/buscarRegrasPorDesafio", function (req, res) {
-    objetivoController.buscarRegrasPorDesafio(req, res);
+router.get("/buscarRegrasPorSave/:idDesafio", function (req, res) {
+    regraController.buscarRegrasPorSave(req, res);
   });
 
 module.exports = router;

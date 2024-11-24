@@ -45,7 +45,7 @@
 
     <section>
       <div class="cima">
-        <div class="cimaEsq" >
+        <div class="cimaEsq">
           <h3>Desafio</h3>
           <span id="imgDesafio">
 
@@ -66,10 +66,10 @@
       </div>
       <div class="baixo">
         <div class="baixoEsq">
-            <h3>Regras</h3>
-            <ul id="listaRegras">
-  
-            </ul>
+          <h3>Regras</h3>
+          <ul id="listaRegras">
+
+          </ul>
         </div>
 
         <div class="baixoDir">
@@ -80,27 +80,11 @@
 
           <h3>Objetivos</h3>
           <div id="listaObjetivos">
-
+            
           </div>
         </div>
       </div>
     </section>
-
-    <span id="nomeDesafio"></span>
-    <!-- <span id="descSave"></span> -->
-
-    <div id="divObj">
-
-    </div>
-    <div id="divRegra">
-
-    </div>
-
-    <span id="spanSave">
-
-    </span>
-
-
   </div>
   <!-- <div class="btn-nav-white">
           <a href="./cards.html">
@@ -132,13 +116,13 @@
   // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   // idUser.innerHTML = sessionStorage.ID_USUARIO;
 
-    var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
-    var jsonSave = JSON.parse(sessionStorage.SAVES);
-    var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
-    var desafioAtual = 0;
-    var saveAtual = 0;
+  var jsonDesafio = JSON.parse(sessionStorage.DESAFIOS);
+  var jsonSave = JSON.parse(sessionStorage.SAVES);
+  var idSaveAtual = JSON.parse(sessionStorage.idSaveAtual);
+  var desafioAtual = 0;
+  var saveAtual = 0;
 
-  window.onload = carregarDadosSave();
+  window.onload = carregarDadosSave(), buscarRegrasPorSave(), buscarObjetivosPorSave();
 
   function carregarDadosSave() {
 
@@ -149,17 +133,76 @@
       }
     }
 
-    if (desafioAtual.nome == 'Desafio dos 7 bebês'){
+    if (desafioAtual.nome == 'Desafio dos 7 bebês') {
       imgDesafio.innerHTML = `<img src='../img/svg/desafioBB.svg'>`;
-    } else if (desafioAtual.nome == 'Desafio da viúva negra'){
+    } else if (desafioAtual.nome == 'Desafio da viúva negra') {
       imgDesafio.innerHTML = `<img src='../img/svg/desafioVN.svg'>`;
     }
 
+    descSave.innerHTML = desafioAtual.descricao;
     nomeSave.innerHTML = saveAtual.nome;
     dtCriacao.innerHTML = saveAtual.dtCriacao;
-    nomeDesafio.innerHTML = desafioAtual.nome;
-    descSave.innerHTML = saveAtual.descricao;
   }
+
+  function buscarRegrasPorSave() {
+    var idDesafio = desafioAtual.idDesafio;
+
+    fetch(`/regras/buscarRegrasPorSave/${idDesafio}`, {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then(json => {
+          sessionStorage.setItem('REGRAS', JSON.stringify(json))
+          console.log("Regras armazenadas:", json);
+
+          listarRegrasPorSave();
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function listarRegrasPorSave() {
+    JSON.parse(sessionStorage.REGRAS).forEach(item => {
+
+      document.getElementById("listaRegras").innerHTML += `
+        <li>${item.descricao};</li>
+        `;
+    });
+  }
+
+  function buscarObjetivosPorSave() {
+    var idDesafio = desafioAtual.idDesafio;
+
+    fetch(`/objetivos/buscarObjetivosPorSave/${idDesafio}`, {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then(json => {
+          sessionStorage.setItem('OBJETIVOS', JSON.stringify(json))
+          console.log("Objetivos armazenados:", json);
+
+          listarObjetivosPorSave()
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function listarObjetivosPorSave() {
+    JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
+
+      document.getElementById("listaObjetivos").innerHTML += `
+      <span>
+        <input type="checkbox" id="objetivo${item.idObj}" name="checkObj" value="${item.idObj}">
+        <label for="objetivo${item.idObj}">${item.descricao}</label>
+      </span>
+        `;
+    });
+  }
+
 
   // window.onload = exibirProgressoDoUsuario();
 

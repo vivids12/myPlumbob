@@ -45,7 +45,7 @@ function cadastrar7BBs(req, res) {
 function buscarRegrasPorSave(req, res) {
     var idDesafio = req.params.idDesafio;
   
-    objetivoModel.buscarRegrasPorDesafio(idDesafio).then((resultado) => {
+    regraModel.buscarRegrasPorSave(idDesafio).then((resultado) => {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
       } else {
@@ -53,7 +53,7 @@ function buscarRegrasPorSave(req, res) {
       }
     }).catch(function (erro) {
       console.log(erro);
-      console.log("Houve um erro ao buscar os desafios: ", erro.sqlMessage);
+      console.log("Houve um erro ao buscar as regras: ", erro.sqlMessage);
       res.status(500).json(erro.sqlMessage);
     });
   }

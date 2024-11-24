@@ -10,7 +10,7 @@ function listar() {
 
 function buscarObjetivosPorSave(idDesafio) {
 
-    var instrucaoSql = `SELECT nome FROM objetivos WHERE fkDesafio = ${idDesafio}`;
+    var instrucaoSql = `SELECT idObj, descricao FROM objetivos WHERE fkDesafio = ${idDesafio}`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
