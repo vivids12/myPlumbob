@@ -58,10 +58,31 @@ function buscarObjetivosPorSave(req, res) {
     });
   }
 
+
+  function atualizarObjetivosCumpridos(req, res){
+    var idObj = req.params.idObj;
+
+    objetivoModel.atualizarObjetivosCumpridos(idObj).then((resultado) => {
+      res.status(200).send("Objetivos atualizados com sucesso");
+      }).catch(function(erro){
+          res.status(500).json(erro.sqlMessage);
+      })
+  }
+  
+  function atualizarObjetivosNaoCumpridos(req, res){
+    var idObj = req.params.idObj;
+
+    objetivoModel.atualizarObjetivosNaoCumpridos(idObj).then((resultado) => {
+      res.status(200).send("Objetivos atualizados com sucesso");
+      }).catch(function(erro){
+          res.status(500).json(erro.sqlMessage);
+      })
+  }
 module.exports = {
-    listar,
     cadastrar,
     cadastrarViuvaNegra,
     cadastrar7BBs,
-    buscarObjetivosPorSave
+    buscarObjetivosPorSave,
+    atualizarObjetivosCumpridos,
+    atualizarObjetivosNaoCumpridos
 }

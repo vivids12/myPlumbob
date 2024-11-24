@@ -13,16 +13,23 @@ router.get("/listar", function (req, res) {
     objetivoController.listar(req, res);
 });
 
-router.get("/cadastrarViuvaNegra", function (req, res){
+router.post("/cadastrarViuvaNegra", function (req, res){
     objetivoController.cadastrarViuvaNegra(req,res);
 });
 
-router.get("/cadastrar7BBs", function (req, res){
+router.post("/cadastrar7BBs", function (req, res){
     objetivoController.cadastrar7BBs(req,res);
 })
 
 router.get("/buscarObjetivosPorSave/:idDesafio", function (req, res) {
     objetivoController.buscarObjetivosPorSave(req, res);
-  });
+});
 
+router.post("/atualizarObjetivosCumpridos/:idObj", function (req, res) {
+    objetivoController.atualizarObjetivosCumpridos(req, res);
+});
+
+router.post("/atualizarObjetivosNaoCumpridos/:idObj", function (req, res) {
+    objetivoController.atualizarObjetivosNaoCumpridos(req, res);
+});
 module.exports = router;

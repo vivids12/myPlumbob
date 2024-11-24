@@ -10,7 +10,7 @@ function listar() {
 
 function buscarObjetivosPorSave(idDesafio) {
 
-    var instrucaoSql = `SELECT idObj, descricao FROM objetivos WHERE fkDesafio = ${idDesafio}`;
+    var instrucaoSql = `SELECT idObj, descricao, progresso FROM objetivos WHERE fkDesafio = ${idDesafio}`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -24,6 +24,23 @@ function cadastrar(descricao, peso, idDesafio) {
     return database.executar(instrucao);
 }
 
+function atualizarObjetivosCumpridos(idObj){
+    var instrucaoSQL = `
+    UPDATE objetivos SET progresso = 1 WHERE idObj = ${idObj};
+    `
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSQL);
+    return database.executar(instrucaoSQL);
+}
+
+function atualizarObjetivosNaoCumpridos(idObj){
+    var instrucaoSQL = `
+    UPDATE objetivos SET progresso = 0 WHERE idObj = ${idObj};
+    `
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSQL);
+    return database.executar(instrucaoSQL);
+}
 
 function cadastrarViuvaNegra() {
     var selectSave = `
@@ -76,5 +93,7 @@ module.exports = {
     listar,
     buscarObjetivosPorSave,
     cadastrarViuvaNegra,
-    cadastrar7BBs
+    cadastrar7BBs,
+    atualizarObjetivosCumpridos,
+    atualizarObjetivosNaoCumpridos
 };

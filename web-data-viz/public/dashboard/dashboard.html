@@ -79,9 +79,10 @@
           <p>*Adicione apenas um objetivo por vez</p>
 
           <h3>Objetivos</h3>
-          <div id="listaObjetivos">
+            <div id="listaObjetivos">
             
-          </div>
+            </div>
+            <button onclick="salvarProgresso()">Salvar progresso</button>
         </div>
       </div>
     </section>
@@ -193,17 +194,67 @@
 
   function listarObjetivosPorSave() {
     JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
-
-      document.getElementById("listaObjetivos").innerHTML += `
-      <span>
-        <input type="checkbox" id="objetivo${item.idObj}" name="checkObj" value="${item.idObj}">
-        <label for="objetivo${item.idObj}">${item.descricao}</label>
-      </span>
+      if (item.progresso == 1){
+        document.getElementById("listaObjetivos").innerHTML += `
+          <span>
+            <input type="checkbox" id="objetivo${item.idObj}" name="checkObj" value="${item.idObj}" checked>
+            <label for="objetivo${item.idObj}">${item.descricao}</label>
+          </span>
         `;
+      } else {
+        document.getElementById("listaObjetivos").innerHTML += `
+          <span>
+            <input type="checkbox" id="objetivo${item.idObj}" name="checkObj" value="${item.idObj}">
+            <label for="objetivo${item.idObj}">${item.descricao}</label>
+          </span>
+        `;
+      }
+      
     });
   }
 
+  function salvarProgresso(){
+    var checkBoxes = document.querySelectorAll('input[name="checkObj"]');
+    var idObj = 0;
 
+    for (var i = 0; i < checkBoxes.length; i++){
+      if (checkBoxes[i].checked){
+        console.log('Id opção selecionada: ', checkBoxes[i].value);
+
+        idObj = checkBoxes[i].value;
+
+        fetch(`/objetivos/atualizarObjetivosCumpridos/${idObj}`, {
+          method: 'POST',
+        })
+          .then((resposta) => {
+            if(resposta.ok){
+              console.log(`Objetivo atualizado`);
+            } else {
+              console.error("Erro na atualização");
+            }
+          }).catch(function (error) {
+            console.error(`Erro ao atualizar progresso: ${error.message}`);
+          });
+        } else {
+          console.log('Id opção não selecionada: ', checkBoxes[i].value);
+
+          idObj = checkBoxes[i].value;
+
+          fetch(`/objetivos/atualizarObjetivosNaoCumpridos/${idObj}`, {
+            method: 'POST',
+          })
+            .then((resposta) => {
+              if(resposta.ok){
+                console.log(`Objetivo atualizado`);
+              } else {
+                console.error("Erro na atualização");
+              }
+            }).catch(function (error) {
+              console.error(`Erro ao atualizar progresso: ${error.message}`);
+            });
+          }
+      }      
+  }
   // window.onload = exibirProgressoDoUsuario();
 
   let proximaAtualizacao;
