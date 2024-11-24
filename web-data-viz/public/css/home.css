@@ -15,12 +15,6 @@
 }
 
 body {
-    /* /* display: flex;
-    /* flex-direction: column; */
-    /* align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw; */ 
     padding: 0;
     margin: 0 20vh;
 }
@@ -109,7 +103,8 @@ header {
     width: 100%;
     height: 90%;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
     gap: 2vw;
 
     overflow: auto;
@@ -258,11 +253,11 @@ header {
     width: 90%;
     height: 4vh;
     padding-left: 1vh;
-    color: #AFAFAF;
+    color: #666666;
 }
 
 #formAddSave input::placeholder, #formAddSave textarea::placeholder{
-    color: #AFAFAF;
+    color: #666666;
 }
 
 #formAddSave textarea{
@@ -351,14 +346,3 @@ header {
 #formAddDesafio button:hover, #formAddDesafio button:focus{
     transform: scale(0.95);
 }
-/* textarea{
-    width: 100%;
-    margin: 1vh 0;
-    color: #ffffff;
-    background-color: #4276B7;
-    font-size: 2vh;
-    padding: 10px;
-    border: white solid 2px;
-    border-radius: 0.8vh;
-    
-} */

@@ -99,12 +99,28 @@ section{
     display: flex;
     flex-direction: column;
     gap: 2vh;
+    margin-bottom: 5vh;
 }
 
 section h3{
     margin: 0;
 }
 
+.linhaExcluir{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+
+.linhaExcluir p{
+    color: #ce1010; 
+    font-weight: 700; 
+    cursor: pointer;
+}
+
+.linhaExcluir p:hover, .linhaExcluir:focus{
+    color: #a70f0f;
+}
 
 .cima, .baixo{
     display: flex;

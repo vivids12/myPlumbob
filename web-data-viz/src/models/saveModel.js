@@ -1,15 +1,6 @@
 var database = require("../database/config");
 
-function listar() {
-    var instrucao = `
-        SELECT * FROM save;
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
 function buscarSavesPorUsuario(idUsuario) {
-
     var instrucaoSql = `SELECT idSave, nome, DATE_FORMAT(dtCriacao, '%d/%m/%Y' ) AS dtCriacao , descricao FROM save WHERE fkUsuario = ${idUsuario}`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -35,7 +26,6 @@ function atualizarDescricao(idSave, descricao){
 
 module.exports = {
     cadastrar,
-    listar,
     buscarSavesPorUsuario,
     atualizarDescricao
-};
+}

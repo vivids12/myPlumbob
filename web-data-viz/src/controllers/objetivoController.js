@@ -42,11 +42,10 @@ function buscarObjetivosPorSave(req, res) {
     var idDesafio = req.params.idDesafio;
   
     objetivoModel.buscarObjetivosPorSave(idDesafio).then((resultado) => {
-      if (resultado.length > 0) {
-        res.status(200).json(resultado);
-      } else {
-        res.status(204).json([]);
-      }
+      res.json({
+        objetivos: resultado
+      });
+
     }).catch(function (erro) {
       console.log(erro);
       console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);

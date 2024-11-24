@@ -15,9 +15,6 @@
 
     <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
   </head>
   <body onload="validarSessao(), exibirProgressoDoUsuario()">
     <header>
@@ -62,6 +59,7 @@
         <div class="baixo">
           <div class="baixoEsq">
             <h3>Regras</h3>
+            <span id="semRegras"></span>
             <ul id="listaRegras">
 
             </ul>
@@ -87,7 +85,7 @@
 
             </div>
             <span id="progressoAtualizar" class="mensagens"></span>
-            <button onclick="salvarProgresso()">Salvar progresso</button>
+            <button id="buttonAtualizarProgresso" onclick="salvarProgresso()">Salvar progresso</button>
           </div>
         </div>
       </section>
@@ -117,6 +115,8 @@
       imgDesafio.innerHTML = `<img src='../img/svg/desafioBB.svg'>`;
     } else if (desafioAtual.nome == 'Desafio da viúva negra') {
       imgDesafio.innerHTML = `<img src='../img/svg/desafioVN.svg'>`;
+    } else {
+      imgDesafio.innerHTML = `<img src='../img/svg/semDesafio.svg'>`;
     }
 
     descSave.innerHTML = saveAtual.descricao;
@@ -132,8 +132,8 @@
     })
       .then(function (resposta) {
         resposta.json().then(json => {
-          sessionStorage.setItem('REGRAS', JSON.stringify(json))
-          console.log("Regras armazenadas:", json);
+          sessionStorage.setItem('REGRAS', JSON.stringify(json.regras))
+          console.log("Regras armazenadas:", json.regras);
 
           listarRegrasPorSave();
         });
@@ -144,12 +144,15 @@
   }
 
   function listarRegrasPorSave() {
-    JSON.parse(sessionStorage.REGRAS).forEach(item => {
-
+    if (sessionStorage.REGRAS == '[]'){
+      semRegras.innerHTML = 'O seu desafio ainda não possui regras, adicione uma regra clicando no botão <b>Adicionar regra</b>'
+    } else {
+      JSON.parse(sessionStorage.REGRAS).forEach(item => {
       document.getElementById("listaRegras").innerHTML += `
         <li>${item.descricao};</li>
         `;
-    });
+      });
+    }
   }
 
   function buscarObjetivosPorSave() {
@@ -160,8 +163,8 @@
     })
       .then(function (resposta) {
         resposta.json().then(json => {
-          sessionStorage.setItem('OBJETIVOS', JSON.stringify(json))
-          console.log("Objetivos armazenados:", json);
+          sessionStorage.setItem('OBJETIVOS', JSON.stringify(json.objetivos))
+          console.log("Objetivos armazenados:", json.objetivos);
 
           listarObjetivosPorSave()
         });
@@ -173,7 +176,13 @@
 
   function listarObjetivosPorSave() {
     listaObjetivos.innerHTML='';
-    JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
+
+    if (sessionStorage.OBJETIVOS == '[]'){
+      buttonAtualizarProgresso.style.display = 'none';
+      listaObjetivos.innerHTML = 'Você ainda não possui objetivos, adicione um objetivo clicando no botão <b>Adicionar objetivo</b>'
+    } else {
+      buttonAtualizarProgresso.style.display = 'block';
+      JSON.parse(sessionStorage.OBJETIVOS).forEach(item => {
       if (item.progresso == 1) {
         document.getElementById("listaObjetivos").innerHTML += `
           <span>
@@ -189,8 +198,8 @@
           </span>
         `;
       }
-
     });
+    }    
   }
 
   function salvarProgresso() {
@@ -242,7 +251,7 @@
     }
   }
 
-  function atualizarDescricao() {
+  function atualizarDescricao(){
     var descricao = descSave.value;
     var idSave = idSaveAtual;
     var idUsuario = sessionStorage.ID_USUARIO;
