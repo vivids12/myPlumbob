@@ -73,11 +73,25 @@ function buscarObjetivosPorSave(req, res) {
           res.status(500).json(erro.sqlMessage);
       })
   }
+
+  function buscarProgresso(){
+    idDesafio = req.params.idDesafio;
+    console.log('To no controller');  
+    objetivoModel.buscarProgresso(idDesafio)
+      .then(function(resultado){
+        res.json(resultado);
+      }).catch(function(erro){
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+
 module.exports = {
     cadastrar,
     cadastrarViuvaNegra,
     cadastrar7BBs,
     buscarObjetivosPorSave,
     atualizarObjetivosCumpridos,
-    atualizarObjetivosNaoCumpridos
+    atualizarObjetivosNaoCumpridos,
+    buscarProgresso
 }

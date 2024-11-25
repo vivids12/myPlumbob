@@ -87,6 +87,16 @@ function cadastrar7BBs(){
     return database.executar(instrucao);
 }
 
+function buscarProgresso(idDesafio){
+    console.log('To no model');  
+    var instrucaoSQL = `
+        SELECT SUM(peso) AS total, (SELECT SUM(peso) FROM objetivos WHERE progresso = 1 AND fkDesafio = ${idDesafio}) AS progresso FROM objetivos WHERE fkDesafio = ${idDesafio};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucaoSQL);
+}
+
 module.exports = {
     cadastrar,
     listar,
@@ -94,5 +104,6 @@ module.exports = {
     cadastrarViuvaNegra,
     cadastrar7BBs,
     atualizarObjetivosCumpridos,
-    atualizarObjetivosNaoCumpridos
+    atualizarObjetivosNaoCumpridos,
+    buscarProgresso
 };

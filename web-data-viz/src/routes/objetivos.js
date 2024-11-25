@@ -4,7 +4,6 @@ var router = express.Router();
 var objetivoController = require("../controllers/objetivoController");
 
 router.post("/cadastrar", function (req, res) {
-    // função a ser chamada quando acessar /objetivos/cadastrar
     objetivoController.cadastrar(req, res);
 });
 
@@ -27,4 +26,9 @@ router.post("/atualizarObjetivosCumpridos/:idObj", function (req, res) {
 router.post("/atualizarObjetivosNaoCumpridos/:idObj", function (req, res) {
     objetivoController.atualizarObjetivosNaoCumpridos(req, res);
 });
+
+router.get("/buscarProgresso/:idDesafio", function (req, res){
+    objetivoController.buscarProgresso(req, res);
+})
+
 module.exports = router;

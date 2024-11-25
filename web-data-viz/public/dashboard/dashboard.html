@@ -386,6 +386,43 @@
     }
   }
 
+  function carregarGrafico(){
+    var idDesafio = desafioAtual.idDesafio;
+
+    fetch(`/objetivos/buscarProgresso/${idDesafio}`)
+      .then(response => response.json())
+        .then(data => {
+          const progresso = data.map(item => item.progresso) // Progresso
+          const total = data.map(item => item.total) // Total
+          // Configuração do grafico
+
+          console.log('Entrei no fetch');  
+          const ctx = document.getElementById('myCanvas').getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              datasets: [{
+                label: 'Progresso',
+                data: progresso,
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100
+                }
+              }
+            }
+          });
+        }).catch(error => {
+            console.log('Erro ao carregar as pontuações: ', error);
+        })
+  }
+
+  window.onload = carregarGrafico();
+
   // window.onload = exibirProgressoDoUsuario();
   let proximaAtualizacao;
 
