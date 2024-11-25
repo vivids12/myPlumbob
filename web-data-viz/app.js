@@ -19,7 +19,6 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var saveRouter = require("./src/routes/saves");
 var desafioRouter = require("./src/routes/desafios");
-var medidaRouter = require("./src/routes/medidas");
 var objetivoRouter = require("./src/routes/objetivos");
 var regraRouter = require("./src/routes/regras");
 
@@ -33,7 +32,6 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/saves", saveRouter);
 app.use("/desafios", desafioRouter);
-app.use("/medidas", medidaRouter);
 app.use("/objetivos", objetivoRouter);
 app.use("/regras", regraRouter);
 // app.use("/avisos", avisosRouter);

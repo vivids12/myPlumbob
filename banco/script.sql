@@ -4,12 +4,11 @@ USE myplumbob;
 CREATE TABLE usuario(
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
-    email VARCHAR(45),
+    email VARCHAR(45) UNIQUE,
     senha varchar(50)
 );
 
 INSERT INTO usuario VALUES (DEFAULT, 'vivi', 'vivi@gmail.com', '123');
-INSERT INTO usuario VALUES (DEFAULT, 'gabi', 'gabi@gmail.com', '123');
 
 CREATE TABLE save(
 	idSave INT AUTO_INCREMENT,
@@ -49,8 +48,3 @@ CREATE TABLE regras(
     descricao VARCHAR(200),
     CONSTRAINT fkRegraDesafio FOREIGN KEY (fkDesafio) REFERENCES desafio(idDesafio)
 );
-
-SELECT SUM(peso) AS total, 
-        (SELECT SUM(peso) FROM objetivos WHERE progresso = 1 
-        AND fkDesafio = 11) AS progresso 
-        FROM objetivos WHERE fkDesafio = 11;

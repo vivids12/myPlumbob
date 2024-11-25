@@ -88,7 +88,10 @@ h3{
 }
 
 #graficos {
-    height: 8vh;
+    height: 14vh;
+    width: fit-content;
+    position: relative;
+    left: -8px;
 }
 
 section{

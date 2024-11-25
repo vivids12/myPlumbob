@@ -30,7 +30,7 @@
       <h3>Data de criação: <span id="dtCriacao"></span></h3>
 
       <div id="graficos">
-        <canvas id="myCanvas"></canvas>
+        <canvas id="myCanvas" width="1100" height="120"></canvas>
       </div>
 
       <section>
@@ -167,7 +167,9 @@
           sessionStorage.setItem('OBJETIVOS', JSON.stringify(json.objetivos))
           console.log("Objetivos armazenados:", json.objetivos);
 
-          listarObjetivosPorSave()
+          listarObjetivosPorSave();
+          myChart.destroy();
+          buscarDados();
         });
       })
       .catch(function (resposta) {
@@ -221,6 +223,7 @@
               progressoAtualizar.style.display = 'flex';
               progressoAtualizar.innerHTML = `Progresso atualizado`;
 
+              myChart.destroy();
               buscarDados();
 
               setTimeout(() => {
@@ -245,6 +248,7 @@
               progressoAtualizar.style.display = 'flex';
               progressoAtualizar.innerHTML = `Progresso atualizado`;
 
+              myChart.destroy();
               buscarDados();
 
               setTimeout(() => {
@@ -258,6 +262,8 @@
           });
       }
     }
+    myChart.destroy();
+    buscarDados();
   }
 
   function atualizarDescricao(){
@@ -395,6 +401,10 @@
     }
   }
 
+  var progressoDado = 0;
+  var total = 0;
+  var myChart;
+
   function buscarDados(){
     var idDesafio = desafioAtual.idDesafio;
 
@@ -403,7 +413,8 @@
     })
       .then(function (resposta) {
         resposta.json().then(json => {
-          sessionStorage.setItem('DADOS', JSON.stringify(json.progresso))
+          progressoDado = Number(json.progresso[0].progresso);
+          total = Number(json.progresso[0].total);
           console.log("Dados coletados:", json.progresso);
 
           carregarGrafico();
@@ -415,31 +426,123 @@
   }
 
   function carregarGrafico(){
-      var total = JSON.parse(sessionStorage.DADOS).total;
-      var progressoDado = JSON.parse(sessionStorage.DADOS).progresso;
+      var progresso = parseInt((progressoDado/total) * 100);
 
-      var progresso = (progressoDado/total) * 100;
+      const data = {
+        labels: ["Progresso atual"],
+        datasets: [
+          {
+            label: "%",
+            data: [progresso],
+            borderColor: ["#F2F2F2"],
+            backgroundColor: ["#30B945"],
+            borderWidth: 0,
+            borderSkipped: false,
+            borderRadius: 5,
+            barPercentage: 0.4,
+            categoryPercentage: 0.9,
+          },
+        ],
+      };
 
-      const ctx = document.getElementById('myCanvas').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          datasets: [{
-            label: 'Progresso',
-            data: progresso,
-            borderWidth: 1
-          }]
+      const progressBar = {
+        id: "progressBar",
+        beforeDatasetsDraw(chart, args, pluginOptions) {
+          const {
+            ctx,
+            data,
+            chartArea: {top, bottom, left, right, width, height},
+            scales: {x, y},
+          } = chart;
+
+          ctx.save();
+
+          const barHeight =
+            (height / y.ticks.length) *
+            data.datasets[0].barPercentage *
+            data.datasets[0].categoryPercentage;
+
+            data.datasets[0].data.forEach((datapoint, index) => {
+            // labeltext
+            const fontSizeLabel = 18;
+            // Configuração da fonte da legenda
+            ctx.font = `bolder ${fontSizeLabel}px "League Spartan", sans-serif`;
+            ctx.fillStyle = "#052937";
+            ctx.textAlign = "left";
+            ctx.fillText(
+              data.labels[0],
+              left,
+              y.getPixelForValue(0) - fontSizeLabel - 15
+            );
+
+            //bg color progress bar
+            ctx.beginPath();
+            ctx.fillStyle = data.datasets[0].borderColor[0];
+            ctx.fillRect(
+              left,
+              y.getPixelForValue(0) - barHeight / 2,
+              width,
+              barHeight
+            );
+          }); 
         },
+      };
+
+      // config
+      const config = {
+        type: "bar",
+        data,
         options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          indexAxis: "y",
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  var valor = context.raw;
+                  return `${valor}%`;
+                },
+              },
+            },
+            legend: {
+              display: false,
+            },
+          },
           scales: {
+            x: {
+              max: 100,
+              grid: {
+                display: false,
+                drawBorder: false,
+              },
+              border: {
+                display: false,
+              },
+              ticks: {
+                display: false,
+              },
+            },
             y: {
               beginAtZero: true,
-              max: 100
-            }
-          }
-        }
-      });
+              grid: {
+                display: false,
+                drawBorder: false,
+              },
+              border: {
+                display: false,
+              },
+              ticks: {
+                display: false,
+              },
+            },
+          },
+        },
+        plugins: [progressBar],
+      };
 
+      const ctx = document.getElementById('myCanvas');
+      myChart = new Chart(ctx, config);
   }
 
   // function carregarGrafico(){

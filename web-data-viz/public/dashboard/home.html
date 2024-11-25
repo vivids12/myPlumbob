@@ -144,11 +144,13 @@
 
                         pCadastro.style.color = '#29AF3F';
                         pCadastro.style.display = 'flex';
-                        pCadastro.innerHTML = 'Save adicionado com sucesso!';
+                        divSemSave.style.display = 'none';
+
+                        pCadastro.innerHTML = 'Save adicionado com sucesso! Recarregue a pagina para que ele apareça';
 
                         setTimeout(() => {
                             pCadastro.style.display = 'none';
-                        }, 2000);
+                        }, 3000);
                             
                         resposta.json().then(json => {
                             console.log(json);
@@ -176,7 +178,7 @@
             if (addSave.style.display == 'none'){
                 divSemSave.style.display = 'flex';
             } else {
-                divSemSave.style.display = 'flex';
+                divSemSave.style.display = 'none';
             }
         } else {
             exibirSaves()
@@ -188,8 +190,8 @@
         sessionStorage.setItem('idSaveAtual', idSave)
     }
 
-    
     function exibirSaves() {
+        var contador = 0;
         fundoSave.style.display = 'flex';
         divSave.innerHTML = '';
         jsonSaves.forEach(item => {
@@ -204,9 +206,7 @@
                 </div>
             </a>
         `;
-        });
-
-        var contador = 0;
+        });     
 
         JSON.parse(sessionStorage.DESAFIOS).forEach(item => {
             var indice = JSON.parse(sessionStorage.SAVES)[contador].idSave;
@@ -233,7 +233,7 @@
             save.classList.remove(classe);
             save.classList.add(classe);
 
-            spanDesafio.innerHTML += desafio;
+            spanDesafio.innerHTML = desafio;
 
             contador++;
         });
