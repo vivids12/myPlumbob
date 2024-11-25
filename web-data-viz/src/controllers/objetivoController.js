@@ -1,14 +1,5 @@
 var objetivoModel = require("../models/objetivoModel");
 
-function listar(req, res) {
-    objetivoModel.listar().then(function(resultado){
-        // precisamos informar que o resultado voltará para o front-end como uma resposta em json
-        res.status(200).json(resultado);
-    }).catch(function(erro){
-        res.status(500).json(erro.sqlMessage);
-    })
-}
-
 function cadastrar(req, res) {
     var descricao = req.body.descricao;
     var peso = req.body.peso;
@@ -41,7 +32,8 @@ function cadastrar7BBs(req, res) {
 function buscarObjetivosPorSave(req, res) {
     var idDesafio = req.params.idDesafio;
   
-    objetivoModel.buscarObjetivosPorSave(idDesafio).then((resultado) => {
+    objetivoModel.buscarObjetivosPorSave(idDesafio)
+    .then((resultado) => {
       res.json({
         objetivos: resultado
       });
@@ -74,14 +66,18 @@ function buscarObjetivosPorSave(req, res) {
       })
   }
 
-  function buscarProgresso(){
+  function buscarProgresso(req, res){
     idDesafio = req.params.idDesafio;
-    console.log('To no controller');  
+    console.log('To no controller'); 
+
     objetivoModel.buscarProgresso(idDesafio)
-      .then(function(resultado){
-        res.json(resultado);
+      .then((resultado) => {
+        res.json({
+          progresso: resultado
+        });
       }).catch(function(erro){
         console.log(erro);
+        console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
       });
   }

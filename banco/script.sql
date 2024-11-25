@@ -49,3 +49,8 @@ CREATE TABLE regras(
     descricao VARCHAR(200),
     CONSTRAINT fkRegraDesafio FOREIGN KEY (fkDesafio) REFERENCES desafio(idDesafio)
 );
+
+SELECT SUM(peso) AS total, 
+        (SELECT SUM(peso) FROM objetivos WHERE progresso = 1 
+        AND fkDesafio = 11) AS progresso 
+        FROM objetivos WHERE fkDesafio = 11;

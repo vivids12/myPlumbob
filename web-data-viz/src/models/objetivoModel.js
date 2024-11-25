@@ -90,10 +90,13 @@ function cadastrar7BBs(){
 function buscarProgresso(idDesafio){
     console.log('To no model');  
     var instrucaoSQL = `
-        SELECT SUM(peso) AS total, (SELECT SUM(peso) FROM objetivos WHERE progresso = 1 AND fkDesafio = ${idDesafio}) AS progresso FROM objetivos WHERE fkDesafio = ${idDesafio};
+        SELECT SUM(peso) AS total, 
+        (SELECT SUM(peso) FROM objetivos WHERE progresso = 1 
+        AND fkDesafio = ${idDesafio}) AS progresso 
+        FROM objetivos WHERE fkDesafio = ${idDesafio};
     `;
 
-    console.log("Executando a instrução SQL: \n" + instrucao);
+    console.log("Executando a instrução SQL: \n" + instrucaoSQL);
     return database.executar(instrucaoSQL);
 }
 

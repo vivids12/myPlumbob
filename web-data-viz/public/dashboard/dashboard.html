@@ -144,6 +144,7 @@
   }
 
   function listarRegrasPorSave() {
+    listaRegras.innerHTML='';
     if (sessionStorage.REGRAS == '[]'){
       semRegras.innerHTML = 'O seu desafio ainda não possui regras, adicione uma regra clicando no botão <b>Adicionar regra</b>'
     } else {
@@ -220,6 +221,8 @@
               progressoAtualizar.style.display = 'flex';
               progressoAtualizar.innerHTML = `Progresso atualizado`;
 
+              buscarDados();
+
               setTimeout(() => {
                 progressoAtualizar.style.display = 'none';
               }, 2000);
@@ -241,6 +244,12 @@
             if (resposta.ok) {
               progressoAtualizar.style.display = 'flex';
               progressoAtualizar.innerHTML = `Progresso atualizado`;
+
+              buscarDados();
+
+              setTimeout(() => {
+                progressoAtualizar.style.display = 'none';
+              }, 2000);
             } else {
               console.error("Erro na atualização");
             }
@@ -386,42 +395,123 @@
     }
   }
 
-  function carregarGrafico(){
+  function buscarDados(){
     var idDesafio = desafioAtual.idDesafio;
 
-    fetch(`/objetivos/buscarProgresso/${idDesafio}`)
-      .then(response => response.json())
-        .then(data => {
-          const progresso = data.map(item => item.progresso) // Progresso
-          const total = data.map(item => item.total) // Total
-          // Configuração do grafico
+    fetch(`/objetivos/buscarProgresso/${idDesafio}`, {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then(json => {
+          sessionStorage.setItem('DADOS', JSON.stringify(json.progresso))
+          console.log("Dados coletados:", json.progresso);
 
-          console.log('Entrei no fetch');  
-          const ctx = document.getElementById('myCanvas').getContext('2d');
-          new Chart(ctx, {
-            type: 'bar',
-            data: {
-              datasets: [{
-                label: 'Progresso',
-                data: progresso,
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  max: 100
-                }
-              }
-            }
-          });
-        }).catch(error => {
-            console.log('Erro ao carregar as pontuações: ', error);
-        })
+          carregarGrafico();
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
   }
 
-  window.onload = carregarGrafico();
+  function carregarGrafico(){
+      var total = JSON.parse(sessionStorage.DADOS).total;
+      var progressoDado = JSON.parse(sessionStorage.DADOS).progresso;
+
+      var progresso = (progressoDado/total) * 100;
+
+      const ctx = document.getElementById('myCanvas').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          datasets: [{
+            label: 'Progresso',
+            data: progresso,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      });
+
+  }
+
+  // function carregarGrafico(){
+  //   var idDesafio = desafioAtual.idDesafio;
+
+  //   fetch(`/objetivos/buscarProgresso/${idDesafio}`, {
+  //     method: 'GET',
+  //   })
+  //     .then(function(resposta){
+  //       resposta.json().then(json => {
+  //         sessionStorage.setItem('Progresso', JSON.stringify(json.progresso))
+  //         console.log('Dados recebido: ', json.progresso);
+  //         // const progresso = json.map(json => json.progresso) // Progresso
+  //         // const total = json.map(json => json.total)
+
+  //         console.log('Entrei no fetch');  
+  //       //   const ctx = document.getElementById('myCanvas').getContext('2d');
+  //       //   new Chart(ctx, {
+  //       //     type: 'bar',
+  //       //     data: {
+  //       //       datasets: [{
+  //       //         label: 'Progresso',
+  //       //         data: progresso,
+  //       //         borderWidth: 1
+  //       //       }]
+  //       //     },
+  //       //     options: {
+  //       //       scales: {
+  //       //         y: {
+  //       //           beginAtZero: true,
+  //       //           max: 100
+  //       //         }
+  //       //       }
+  //       //     }
+  //       //   });
+  //        })
+  //     })
+  //     .catch(function (resposta){
+  //       console.log(`#ERRO: ${resposta}`);
+  //     })
+  //     // .then(response => response.json())
+  //     //   .then(data => {
+  //     //     const progresso = data.map(item => item.progresso) // Progresso
+  //     //     const total = data.map(item => item.total) // Total
+  //     //     // Configuração do grafico
+
+  //     //     console.log('Entrei no fetch');  
+  //     //     const ctx = document.getElementById('myCanvas').getContext('2d');
+  //     //     new Chart(ctx, {
+  //     //       type: 'bar',
+  //     //       data: {
+  //     //         datasets: [{
+  //     //           label: 'Progresso',
+  //     //           data: progresso,
+  //     //           borderWidth: 1
+  //     //         }]
+  //     //       },
+  //     //       options: {
+  //     //         scales: {
+  //     //           y: {
+  //     //             beginAtZero: true,
+  //     //             max: 100
+  //     //           }
+  //     //         }
+  //     //       }
+  //     //     });
+  //     //   }).catch(error => {
+  //     //       console.log('Erro ao carregar as pontuações: ', error);
+  //     //   })
+  // }
+
+  window.onload = buscarDados();
 
   // window.onload = exibirProgressoDoUsuario();
   let proximaAtualizacao;
