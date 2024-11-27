@@ -8,7 +8,7 @@ CREATE TABLE usuario(
     senha varchar(50)
 );
 
-INSERT INTO usuario VALUES (DEFAULT, 'vivi', 'vivi@gmail.com', '123');
+INSERT INTO usuario VALUES (DEFAULT, 'vivi', 'vivi@gmail.com', MD5('123'));
 
 CREATE TABLE save(
 	idSave INT AUTO_INCREMENT,
