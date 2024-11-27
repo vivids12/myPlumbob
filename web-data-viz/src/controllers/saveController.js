@@ -20,53 +20,50 @@ function cadastrar(req, res) {
   saveModel.cadastrar(nome, data, desc, idUsuario)
     .then(
       function (resposta) {
-      }).catch(function (erro) {
-        res.status(500).json(erro.sqlMessage);
+        desafioModel.cadastrar(nomeDesafio, idUsuario).then(
+          function (resultadoDesafio) {
+            console.log('Desafio cadastrado');
+
+            if (nomeDesafio == 'viuva negra') {
+              objetivoModel.cadastrarViuvaNegra().then(
+                function (resultadoObjetivo) {
+                  console.log('Objetivos cadastrados');
+                })
+            } else if (nomeDesafio == '7bbs') {
+              objetivoModel.cadastrar7BBs().then(
+                function (resultadoObjetivo) {
+                  console.log('Objetivos cadastrados');
+                })
+            } else {
+
+            };
+
+            if (nomeDesafio == 'viuva negra') {
+              regraModel.cadastrarViuvaNegra().then(
+                function (resultadoObjetivo) {
+                  console.log('Regras cadastrados');
+                })
+            } else if (nomeDesafio == '7bbs') {
+              regraModel.cadastrar7BBs().then(
+                function (resultadoObjetivo) {
+                  console.log('Regras cadastrados');
+                })
+            } else {
+
+            }
+
+            saveModel.buscarSavesPorUsuario(idUsuario)
+              .then((resultadoSaves) => {
+                desafioModel.buscarDesafiosPorUsuario(idUsuario)
+                  .then((resultadoDesafios) => {
+                    res.json({
+                      saves: resultadoSaves,
+                      desafios: resultadoDesafios
+                    });
+                  })
+              });
+          })
       })
-
-  desafioModel.cadastrar(nomeDesafio, idUsuario).then(
-    function (resultadoDesafio) {
-      console.log('Desafio cadastrado');
-
-      if (nomeDesafio == 'viuva negra') {
-        objetivoModel.cadastrarViuvaNegra().then(
-          function (resultadoObjetivo) {
-            console.log('Objetivos cadastrados');
-          })
-      } else if (nomeDesafio == '7bbs'){
-        objetivoModel.cadastrar7BBs().then(
-          function (resultadoObjetivo) {
-            console.log('Objetivos cadastrados');
-          })
-      } else {
-
-      };
-      
-      if (nomeDesafio == 'viuva negra') {
-        regraModel.cadastrarViuvaNegra().then(
-          function (resultadoObjetivo) {
-            console.log('Regras cadastrados');
-          })
-      } else if (nomeDesafio == '7bbs'){
-        regraModel.cadastrar7BBs().then(
-          function (resultadoObjetivo) {
-            console.log('Regras cadastrados');
-          })
-      } else {
-
-      }
-
-      saveModel.buscarSavesPorUsuario(idUsuario)
-      .then((resultadoSaves) => {
-        desafioModel.buscarDesafiosPorUsuario(idUsuario)
-          .then((resultadoDesafios) => {
-            res.json({
-              saves: resultadoSaves,
-              desafios: resultadoDesafios
-            });
-          })
-      });
-    })
     .catch(function (erro) {
       res.status(500).json(erro.sqlMessage);
     })
@@ -98,16 +95,16 @@ function atualizarDescricao(req, res) {
   var idUsuario = req.body.idUsuario;
 
   saveModel.atualizarDescricao(idSave, descricao).then(
-    function(resultado) {
+    function (resultado) {
       saveModel.buscarSavesPorUsuario(idUsuario).then(
-        function(resultadoSaves){
+        function (resultadoSaves) {
           res.json({
             saves: resultadoSaves,
           });
         }
       )
-    }).catch(function(erro){
-        res.status(500).json(erro.sqlMessage);
+    }).catch(function (erro) {
+      res.status(500).json(erro.sqlMessage);
     })
 
 }

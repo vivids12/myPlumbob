@@ -2,14 +2,14 @@ var database = require("../database/config");
 
 function cadastrar(descricao, idDesafio) {
     var instrucao = `
-    INSERT INTO regras (fkDesafio, descricao) VALUES (${idDesafio}, '${descricao}')`;
+    INSERT INTO regras (fkDesafio, descricao) VALUES (${idDesafio}, '${descricao}');`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
 function buscarRegrasPorSave(idDesafio) {
-    var instrucaoSql = `SELECT descricao FROM regras WHERE fkDesafio = ${idDesafio}`;
+    var instrucaoSql = `SELECT descricao FROM regras WHERE fkDesafio = ${idDesafio};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

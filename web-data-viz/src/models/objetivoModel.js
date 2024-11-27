@@ -9,7 +9,7 @@ function listar() {
 }
 
 function buscarObjetivosPorSave(idDesafio) {
-    var instrucaoSql = `SELECT idObj, descricao, progresso, peso FROM objetivos WHERE fkDesafio = ${idDesafio}`;
+    var instrucaoSql = `SELECT idObj, descricao, progresso, peso FROM objetivos WHERE fkDesafio = ${idDesafio};`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -17,7 +17,7 @@ function buscarObjetivosPorSave(idDesafio) {
 
 function cadastrar(descricao, peso, idDesafio) {
     var instrucao = `
-    INSERT INTO objetivos (fkDesafio, progresso, descricao, peso) VALUES ('${idDesafio}', false, '${descricao}', ${peso})`;
+    INSERT INTO objetivos (fkDesafio, progresso, descricao, peso) VALUES ('${idDesafio}', false, '${descricao}', ${peso});`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

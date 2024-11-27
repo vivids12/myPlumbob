@@ -1,7 +1,6 @@
 var usuarioModel = require("../models/usuarioModel");
 var saveModel = require("../models/saveModel");
 var desafioModel = require("../models/desafioModel");
-// var aquarioModel = require("../models/aquarioModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -22,30 +21,20 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        // res.json({
-                        //     idUsuario: resultadoAutenticar[0].idUsuario,
-                        //     email: resultadoAutenticar[0].email,
-                        //     nome: resultadoAutenticar[0].nome,
-                        //     senha: resultadoAutenticar[0].senha,
-                        // });
-
                         saveModel.buscarSavesPorUsuario(resultadoAutenticar[0].idUsuario)
                             .then((resultadoSaves) => {
-                               
-                                    desafioModel.buscarDesafiosPorUsuario(resultadoAutenticar[0].idUsuario)
-                                        .then((resultadoDesafios) => {
-                                            res.json({
-                                                idUsuario: resultadoAutenticar[0].idUsuario,
-                                                email: resultadoAutenticar[0].email,
-                                                nome: resultadoAutenticar[0].nome,
-                                                senha: resultadoAutenticar[0].senha,
-                                                saves: resultadoSaves,
-                                                desafios: resultadoDesafios
-                                            });
-                                        })
-                                    // console.log(resultadoSaves);
-                                    // console.log(resultadoSaves.saves);
 
+                                desafioModel.buscarDesafiosPorUsuario(resultadoAutenticar[0].idUsuario)
+                                    .then((resultadoDesafios) => {
+                                        res.json({
+                                            idUsuario: resultadoAutenticar[0].idUsuario,
+                                            email: resultadoAutenticar[0].email,
+                                            nome: resultadoAutenticar[0].nome,
+                                            senha: resultadoAutenticar[0].senha,
+                                            saves: resultadoSaves,
+                                            desafios: resultadoDesafios
+                                        });
+                                    })
                             })
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
@@ -69,7 +58,6 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    // var fkEmpresa = req.body.idEmpresaVincularServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -79,13 +67,7 @@ function cadastrar(req, res) {
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
     }
-    // else if (fkEmpresa == undefined) {
-    //     res.status(400).send("Sua empresa a vincular está undefined!");
-    // } 
     else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        // cpf, fkEmpresa
         usuarioModel.cadastrar(nome, email, senha)
             .then(
                 function (resultado) {
